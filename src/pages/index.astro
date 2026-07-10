@@ -1,0 +1,386 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { SITE, PRICING } from '../lib/site';
+import { cityGate } from '../lib/publishGate';
+import { organizationSchema, websiteSchema, serviceSchema, faqSchema } from '../lib/schema';
+import { PHOTOS, GALLERY } from '../lib/images';
+
+const cities = (await getCollection('cities'))
+  .filter((c) => cityGate(c.data).indexable)
+  .sort((a, b) => (b.data.population ?? 0) - (a.data.population ?? 0));
+
+const types = (await getCollection('types')).sort((a, b) => {
+  const order = { high: 0, med: 1, low: 2 };
+  return order[a.data.priority] - order[b.data.priority];
+});
+
+const guides = (await getCollection('guides')).filter((g) => g.data.priority === 'high');
+
+const faqItems = [
+  {
+    q: 'Combien coûte la location d’une clôture de chantier au Québec ?',
+    a: `Au Québec, la location se facture au pied linéaire, par mois : environ ${PRICING.perLinearFoot}. À la journée, comptez ${PRICING.dailyPanel}. S’ajoutent la livraison, l’installation, une surcharge carburant et le retrait.`,
+  },
+  {
+    q: 'Faut-il un permis pour installer une clôture de chantier ?',
+    a: 'Dans la plupart des cas oui, dès que la clôture touche au domaine public (trottoir, chaussée). Les règles — hauteur minimale, type de permis, délai — varient selon la ville. Consultez la fiche de votre municipalité.',
+  },
+  {
+    q: 'Quelle hauteur minimale pour une clôture de chantier ?',
+    a: 'Souvent 1,8 m, parfois 2,0 m selon la municipalité. La clôture doit séparer clairement la zone de travaux de la voie publique, comme l’exige la CNESST.',
+  },
+  {
+    q: 'Quel délai prévoir avant l’ouverture du chantier ?',
+    a: 'Le maître d’œuvre doit transmettre un avis d’ouverture à la CNESST au moins 10 jours avant le début des activités; certaines villes exigent aussi un délai pour le permis d’occupation du domaine public.',
+  },
+];
+
+const jsonLd = [
+  organizationSchema(),
+  websiteSchema(),
+  serviceSchema({
+    name: 'Location de clôture de chantier au Québec',
+    description: 'Comparez les fournisseurs de location de clôture de chantier partout au Québec, avec les règles de permis par ville et les prix.',
+    areaName: 'Québec, Canada',
+  }),
+  faqSchema(faqItems),
+];
+
+const steps = [
+  { n: '01', t: 'Décrivez votre chantier', d: 'Ville, type de clôture, longueur et durée — en 60 secondes.' },
+  { n: '02', t: 'Recevez des soumissions', d: 'Des fournisseurs qui desservent votre secteur vous répondent.' },
+  { n: '03', t: 'Comparez et choisissez', d: 'Prix, livraison, installation et disponibilité 24/7.' },
+  { n: '04', t: 'Installation sur place', d: 'Livraison, montage et retrait pris en charge par le loueur.' },
+];
+
+const typeIcons: Record<string, string> = {
+  'cloture-temporaire': '🚧',
+  'cloture-panneau-grillage': '🔲',
+  'cloture-opaque-brise-vent': '🧱',
+  'cloture-mobile': '🚚',
+  'cloture-anti-bruit': '🔇',
+};
+
+const features = [
+  { icon: '✅', t: 'Fournisseurs vérifiés', d: 'Un répertoire indépendant des loueurs actifs partout au Québec, pas une seule entreprise.' },
+  { icon: '💲', t: 'Prix clairs et honnêtes', d: 'Des tarifs réels au pied linéaire et les frais à prévoir, sans surprise.' },
+  { icon: '🛡️', t: 'Conformité CNESST & permis', d: 'Les règles de permis municipal et de sécurité, ville par ville.' },
+];
+---
+
+<Base
+  title="Location de clôture de chantier au Québec | Prix, permis et fournisseurs"
+  description="Location de clôture de chantier partout au Québec : comparez les fournisseurs, connaissez les prix (0,30–0,80 $/pi/mois) et les règles de permis municipal ville par ville."
+  path="/"
+  jsonLd={jsonLd}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <p class="eyebrow light">Clôture de chantier · partout au Québec</p>
+        <h1>Sécurisez votre chantier, rapidement</h1>
+        <p>
+          Louez une clôture de chantier partout au Québec en comparant les fournisseurs
+          de votre secteur. Prix réels, règles de permis par ville et soumissions gratuites —
+          tout au même endroit.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="/soumission">Demander une soumission</a>
+          <a class="btn btn-ghost" href="/guides/prix-location-cloture-chantier">Voir les prix</a>
+        </div>
+        <ul class="hero-badges">
+          <li><b>500+</b> chantiers desservis</li>
+          <li><b>{cities.length}</b> villes couvertes</li>
+          <li><b>24/7</b> soumission gratuite</li>
+        </ul>
+      </div>
+
+      <aside class="hero-card">
+        <p class="hero-card-title">Ce que vous obtenez</p>
+        <ul class="hero-checks">
+          <li>
+            <span class="ic">💲</span>
+            <div><b>Prix réels au pied linéaire</b><span>0,30 $ à 0,80 $ / pi / mois, tous les frais expliqués</span></div>
+          </li>
+          <li>
+            <span class="ic">🛡️</span>
+            <div><b>Règles de permis de votre ville</b><span>Occupation du domaine public, hauteur, délais</span></div>
+          </li>
+          <li>
+            <span class="ic">✅</span>
+            <div><b>Fournisseurs vérifiés</b><span>Qui livrent et installent dans votre secteur</span></div>
+          </li>
+        </ul>
+        <a class="btn hero-card-btn" href="/soumission">Obtenir des soumissions gratuites</a>
+        <p class="hero-card-note">Gratuit · sans engagement · réponse 24/7</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- QUICK QUOTE BAR -->
+  <div class="container">
+    <div class="quickbar">
+      <div class="quickbar-inner">
+        <div>
+          <h3>Soumission en 60 secondes</h3>
+          <p class="sub">Dites-nous où et quel type de clôture — on trouve les fournisseurs.</p>
+        </div>
+        <form method="get" action="/soumission">
+          <select name="ville" aria-label="Ville">
+            <option value="">Votre ville</option>
+            {cities.map((c) => <option value={c.data.slug}>{c.data.name}</option>)}
+          </select>
+          <select name="type" aria-label="Type">
+            <option value="">Type de clôture</option>
+            {types.map((t) => <option value={t.data.slug}>{t.data.name}</option>)}
+          </select>
+          <button class="btn" type="submit">Obtenir des prix</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <section class="section">
+    <div class="container split">
+      <div class="media-col">
+        <figure class="media photo">
+          <img src={PHOTOS.clotureTemporaire2.src} alt={PHOTOS.clotureTemporaire2.alt} width="670" height="886" loading="lazy" />
+        </figure>
+      </div>
+      <div>
+        <p class="eyebrow">Qui sommes-nous</p>
+        <h2>Des clôtures pour chaque chantier</h2>
+        <div class="tabs">
+          <span class="active">Notre mission</span>
+          <span>Notre expertise</span>
+          <span>Nos valeurs</span>
+        </div>
+        <p>
+          Nous mettons en relation les entrepreneurs et gestionnaires de chantier avec les
+          bons fournisseurs de clôture temporaire au Québec — en toute transparence sur les
+          prix, les délais et les exigences municipales.
+        </p>
+        <ul class="checks">
+          <li>Fournisseurs fiables et vérifiés</li>
+          <li>Prix clairs, sans surprise</li>
+          <li>Couverture partout au Québec</li>
+          <li>Conformité CNESST et permis</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section alt">
+    <div class="container stats-band">
+      <div class="stat"><b>25<em>+</em></b><span>Fournisseurs répertoriés</span></div>
+      <div class="stat"><b>98<em>%</em></b><span>Chantiers couverts sous 48 h</span></div>
+      <div class="stat"><b>{cities.length}<em>+</em></b><span>Villes desservies</span></div>
+      <div class="stat"><b>24/7</b><span>Soumissions gratuites</span></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center">Nos services</p>
+        <h2>Des solutions de clôture fiables et rapides</h2>
+        <p class="lede">Chaque type de clôture de chantier, avec son usage et son prix indicatif. Cliquez pour les spécifications et les fournisseurs.</p>
+      </div>
+      <div class="services-grid">
+        {types.map((t) => (
+          <a class="card service-card" href={`/types/${t.id}`}>
+            <span class="go">→</span>
+            <div class="icon">{typeIcons[t.id] ?? '🚧'}</div>
+            <h3>{t.data.name}</h3>
+            <p>{t.data.differentiator ?? t.data.intro}</p>
+            <span class="price-tag">{t.data.price_range}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section alt">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center">Comment ça marche</p>
+        <h2>Votre clôture de chantier en 4 étapes</h2>
+      </div>
+      <div class="steps">
+        {steps.map((s) => (
+          <div class="step-card">
+            <span class="num">{s.n}</span>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section">
+    <div class="container split">
+      <div class="media-col">
+        <figure class="media photo">
+          <img src={PHOTOS.barriereBloc.src} alt={PHOTOS.barriereBloc.alt} width="670" height="886" loading="lazy" />
+        </figure>
+      </div>
+      <div>
+        <p class="eyebrow">Pourquoi nous choisir</p>
+        <h2>Votre partenaire de confiance pour la clôture de chantier</h2>
+        {features.map((f) => (
+          <div class="feature">
+            <div class="icon">{f.icon}</div>
+            <div>
+              <h3>{f.t}</h3>
+              <p>{f.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (placeholder — replace with real reviews before launch) -->
+  <section class="section navy">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center light">Témoignages</p>
+        <h2>Ce que disent les gestionnaires de chantier</h2>
+      </div>
+      <div class="reviews">
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>« Soumission reçue le jour même. On a comparé trois loueurs et économisé sur la livraison. Le rappel des règles de permis de la ville nous a évité un retard. »</p>
+          <div class="who"><span class="av">MR</span><span><b>Marc R.</b><span>Entrepreneur général, Laval</span></span></div>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>« Enfin un endroit qui explique clairement les prix au pied linéaire et les frais d’installation. Simple et rapide pour trouver un fournisseur à Québec. »</p>
+          <div class="who"><span class="av">SL</span><span><b>Sophie L.</b><span>Gestionnaire de projet, Québec</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center">Réalisations</p>
+        <h2>Des installations de clôture de qualité</h2>
+      </div>
+      <div class="gallery">
+        {GALLERY.map((ph) => (
+          <figure class="tile">
+            <img src={ph.src} alt={ph.alt} width="670" height="886" loading="lazy" />
+            <span>{ph.caption}</span>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- VILLES -->
+  <section class="section alt" id="villes">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Villes desservies</p>
+        <h2>Louer une clôture de chantier par ville</h2>
+        <p class="lede">Chaque fiche détaille les fournisseurs locaux, les prix et le règlement municipal applicable.</p>
+      </div>
+      <div class="grid grid-3">
+        {cities.map((c) => (
+          <a class="card" href={`/villes/${c.id}`}>
+            <span class="kicker">Ville</span>
+            <h3>{c.data.name}</h3>
+            <p>Fournisseurs, permis d’occupation et hauteur minimale à {c.data.name}.</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA + FORM -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-cta">
+        <div>
+          <p class="eyebrow light">Soumission gratuite</p>
+          <h2>Obtenez votre clôture de chantier dès aujourd’hui</h2>
+          <p>Décrivez votre projet et recevez des soumissions de fournisseurs qui desservent votre secteur. Gratuit et sans engagement.</p>
+        </div>
+        <div class="form-card">
+          <form class="form" method="post" action="/api/soumission" name="soumission-home">
+            <label>Ville du chantier
+              <select name="ville" required>
+                <option value="">Choisir…</option>
+                {cities.map((c) => <option value={c.data.slug}>{c.data.name}</option>)}
+                <option value="autre">Ailleurs au Québec</option>
+              </select>
+            </label>
+            <label>Courriel
+              <input type="email" name="email" required placeholder="vous@exemple.com" />
+            </label>
+            <label>Détails (longueur, durée, dates)
+              <input type="text" name="details" placeholder="ex. 200 pi, 3 mois" />
+            </label>
+            <button class="btn" type="submit">Envoyer ma demande</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section class="section alt">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center">Guides pratiques</p>
+        <h2>Tout savoir avant de louer</h2>
+      </div>
+      <div class="grid grid-2">
+        {guides.map((g) => (
+          <a class="card" href={`/guides/${g.id}`}>
+            <span class="kicker">Guide</span>
+            <h3>{g.data.h1 ?? g.data.title}</h3>
+            <p>{g.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head center">
+        <p class="eyebrow center">Questions fréquentes</p>
+        <h2>Vos questions, nos réponses</h2>
+      </div>
+      <div class="faq" style="max-width:780px;margin:0 auto">
+        {faqItems.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Besoin d’une clôture de chantier ? Demandez une soumission</h2>
+      <a class="btn" href="/soumission">Demander une soumission →</a>
+    </div>
+  </section>
+</Base>

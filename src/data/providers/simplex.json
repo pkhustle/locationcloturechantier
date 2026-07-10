@@ -1,0 +1,11 @@
+{
+  "id": "simplex",
+  "name": "Simplex",
+  "url": "https://www.simplex.ca/fr/",
+  "cities_served": ["montreal", "quebec", "laval"],
+  "regions_served": ["montreal", "capitale-nationale", "laval"],
+  "fence_types": ["cloture-temporaire", "cloture-panneau-grillage"],
+  "services": { "delivery": true, "install": false, "h24_7": false },
+  "is_partner": false,
+  "notes": "Location de clôture de chantier robuste (6 pi × 7 pi × 2 po) et équipement de protection."
+}

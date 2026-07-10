@@ -1,0 +1,11 @@
+{
+  "slug": "cloture-mobile",
+  "name": "Clôture mobile de chantier",
+  "dimensions": ["3,5 m × 2 m"],
+  "material": "Acier galvanisé, socles amovibles",
+  "use_cases": ["chantier temporaire", "sécurisation ponctuelle"],
+  "price_range": "location à la journée ou au mois",
+  "differentiator": "Déplaçable sans outillage grâce à ses socles amovibles : utile pour les chantiers dont le périmètre évolue souvent.",
+  "intro": "La clôture mobile combine légèreté et flexibilité : ses socles amovibles permettent de reconfigurer le périmètre au besoin, sans installation permanente.",
+  "priority": "low"
+}

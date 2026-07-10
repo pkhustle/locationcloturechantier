@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import QuoteCTA from '../../../components/QuoteCTA.astro';
+import { cityGate } from '../../../lib/publishGate';
+import { serviceSchema, breadcrumbSchema } from '../../../lib/schema';
+
+// Combo pages exist for Tier-1 cities ONLY (prevents matrix index bloat).
+export async function getStaticPaths() {
+  const cities = await getCollection('cities');
+  return cities
+    .filter((c) => c.data.demand_tier === 1 && cityGate(c.data).indexable)
+    .map((c) => ({ params: { ville: c.id }, props: { city: c.data } }));
+}
+
+const { city } = Astro.props;
+const type = (await getCollection('types')).find((t) => t.id === 'cloture-temporaire')!;
+
+const allProviders = await getCollection('providers');
+const cityProviders = allProviders.filter(
+  (p) => city.providers.includes(p.data.id) && p.data.fence_types.includes('cloture-temporaire'),
+);
+
+const path = `/villes/${city.slug}/cloture-temporaire`;
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: city.name, path: `/villes/${city.slug}` },
+    { name: 'Clôture temporaire', path },
+  ]),
+  serviceSchema({
+    name: `Location de clôture temporaire à ${city.name}`,
+    description: `Location de clôture temporaire de chantier à ${city.name} : dimensions, prix et fournisseurs.`,
+    areaName: city.name,
+  }),
+];
+---
+
+<Base
+  title={`Location de clôture temporaire à ${city.name} | Dimensions, prix, fournisseurs`}
+  description={`Louer une clôture temporaire de chantier à ${city.name} : formats 8 pi × 6 pi, prix au pied linéaire et fournisseurs qui livrent et installent dans votre secteur.`}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Accueil</a> / <a href={`/villes/${city.slug}`}>{city.name}</a> / <span>Clôture temporaire</span>
+    </nav>
+
+    <p class="eyebrow">{city.name} · {type.data.price_range}</p>
+    <h1>Location de clôture temporaire à {city.name}</h1>
+    <p class="lede">{type.data.intro}</p>
+
+    <section>
+      <h2>Spécifications</h2>
+      <div class="panel">
+        <dl class="datalist">
+          <div><dt>Dimensions courantes</dt><dd>{type.data.dimensions.join(' · ')}</dd></div>
+          <div><dt>Matériau</dt><dd>{type.data.material}</dd></div>
+          <div><dt>Usages</dt><dd>{type.data.use_cases.join(', ')}</dd></div>
+          <div><dt>Prix indicatif</dt><dd>{type.data.price_range}</dd></div>
+        </dl>
+      </div>
+      <p>
+        Règles de permis et hauteur minimale : voir la <a href={`/villes/${city.slug}`}>fiche complète de {city.name}</a>.
+      </p>
+    </section>
+
+    {cityProviders.length > 0 && (
+      <section>
+        <h2>Fournisseurs de clôture temporaire à {city.name}</h2>
+        <ul class="providers">
+          {cityProviders.map((pr) => (
+            <li>
+              <span class="name"><a href={pr.data.url} rel="nofollow noopener" target="_blank">{pr.data.name}</a></span>
+              <span class="tags">{pr.data.notes}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </main>
+
+  <QuoteCTA context={city.name} />
+</Base>

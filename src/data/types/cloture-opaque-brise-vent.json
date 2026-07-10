@@ -1,0 +1,11 @@
+{
+  "slug": "cloture-opaque-brise-vent",
+  "name": "Clôture opaque et toile brise-vent",
+  "dimensions": ["habillage sur clôture 6 pi", "toile pleine hauteur"],
+  "material": "Panneaux pleins ou toile brise-vent fixée sur structure grillagée",
+  "use_cases": ["chantier urbain", "protection contre la poussière", "intimité visuelle"],
+  "price_range": "supplément à la clôture de base",
+  "differentiator": "Occultation visuelle et coupure du vent/poussière : souvent exigée sur les chantiers en bordure de trottoir en milieu urbain dense.",
+  "intro": "La toile brise-vent ou les panneaux opaques transforment une clôture de chantier en écran complet. C'est l'option économique pour occulter un grand linéaire et limiter la poussière près du public.",
+  "priority": "med"
+}

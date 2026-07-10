@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { cityGate } from '../../lib/publishGate';
+import { breadcrumbSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((g) => ({ params: { slug: g.id }, props: { guide: g } }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+
+// The permit hub guide gets the live per-city permit table appended (the moat).
+const isPermitHub = guide.id === 'permis-municipal-cloture-chantier';
+const permitCities = isPermitHub
+  ? (await getCollection('cities'))
+      .filter((c) => cityGate(c.data).indexable && c.data.permit)
+      .sort((a, b) => (b.data.population ?? 0) - (a.data.population ?? 0))
+  : [];
+
+const path = `/guides/${guide.id}`;
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: guide.data.title, path },
+  ]),
+];
+---
+
+<Base title={`${guide.data.title} | ${'Location Clôture Chantier'}`} description={guide.data.description} path={path} jsonLd={jsonLd}>
+  <main class="container">
+    <nav class="breadcrumbs"><a href="/">Accueil</a> / <span>Guide</span></nav>
+
+    <p class="eyebrow">Guide · mis à jour le {guide.data.updated}</p>
+    <h1>{guide.data.h1 ?? guide.data.title}</h1>
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    {isPermitHub && permitCities.length > 0 && (
+      <section class="prose">
+        <h2>Permis par ville</h2>
+        <table>
+          <thead>
+            <tr><th>Ville</th><th>Hauteur min.</th><th>Domaine public</th><th>Fiche</th></tr>
+          </thead>
+          <tbody>
+            {permitCities.map((c) => (
+              <tr>
+                <td>{c.data.name}</td>
+                <td>{c.data.permit?.min_height_m ? `${c.data.permit.min_height_m} m` : '—'}</td>
+                <td>{c.data.permit?.public_domain_permit_required ? 'Permis requis' : 'Selon le cas'}</td>
+                <td><a href={`/villes/${c.id}`}>{c.data.name}</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )}
+  </main>
+
+  <QuoteCTA />
+</Base>

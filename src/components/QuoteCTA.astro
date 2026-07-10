@@ -1,0 +1,17 @@
+---
+interface Props {
+  context?: string;
+}
+const { context = '' } = Astro.props;
+---
+
+<section class="container">
+  <div class="cta">
+    <h2>Besoin d'une clôture de chantier{context ? ` à ${context}` : ''} ?</h2>
+    <p>
+      Recevez des soumissions de fournisseurs qui desservent votre secteur.
+      Comparez les prix, la livraison et l'installation. Gratuit et sans engagement.
+    </p>
+    <a class="btn" href="/soumission">Demander une soumission</a>
+  </div>
+</section>

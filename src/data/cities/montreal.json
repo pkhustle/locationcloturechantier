@@ -1,0 +1,46 @@
+{
+  "slug": "montreal",
+  "name": "Montréal",
+  "region": "montreal",
+  "mrc": "Agglomération de Montréal",
+  "population": 1780000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.5017,
+    "lng": -73.5673
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Installer une clôture — Ville de Montréal",
+    "bylaw_url": "https://montreal.ca/demarches/installer-une-cloture-ou-une-haie",
+    "permit_url": "https://montreal.ca/demarches/installer-une-cloture-ou-une-haie",
+    "cost_note": "Tarif d'occupation du domaine public variable selon l'arrondissement.",
+    "lead_time_note": "Prévoir un délai de traitement; l'avis d'ouverture de chantier va à la CNESST au moins 10 jours avant le début.",
+    "notes": "Une clôture non résidentielle (chantier) requiert une autorisation, et chaque arrondissement peut ajouter ses exigences (bruit, poussière, protection du trottoir)."
+  },
+  "boroughs": [
+    "Ville-Marie",
+    "Rosemont–La Petite-Patrie",
+    "Le Plateau-Mont-Royal",
+    "Ahuntsic-Cartierville",
+    "Mercier–Hochelaga-Maisonneuve"
+  ],
+  "local_context": "Forte densité de chantiers en milieu urbain : les clôtures opaques ou avec toile brise-vent sont souvent exigées près des trottoirs et des voies publiques pour protéger les passants.",
+  "nearby_cities": [
+    "laval",
+    "longueuil"
+  ],
+  "providers": [
+    "cloture-secure",
+    "groupe-choquette",
+    "battlefield",
+    "lou-tec",
+    "super-save",
+    "moduloc"
+  ],
+  "pricing_note": "Grande région de Montréal : 0,30 $ à 0,80 $ / pi linéaire / mois, livraison souvent sans surcharge dans un rayon d'environ 40 km.",
+  "unique_fact": "La Ville peut exiger un plan de gestion de chantier au moment de la demande de permis d'occupation du domaine public.",
+  "image": "/images/Cloture-temporaire-1.webp",
+  "image_alt": "Clôture de chantier temporaire à panneaux grillagés sur un chantier à Montréal"
+}

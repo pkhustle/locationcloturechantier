@@ -1,0 +1,11 @@
+{
+  "slug": "cloture-anti-bruit",
+  "name": "Clôture / panneau anti-bruit",
+  "dimensions": ["panneaux acoustiques sur clôture 6 pi"],
+  "material": "Panneaux acoustiques absorbants fixés sur structure de chantier",
+  "use_cases": ["chantier près de résidences", "respect des règlements de bruit"],
+  "price_range": "supplément selon la surface couverte",
+  "differentiator": "Réduit la propagation du bruit de chantier : pertinente là où un règlement municipal encadre les nuisances sonores.",
+  "intro": "Les panneaux anti-bruit s'ajoutent à la clôture de chantier pour atténuer le son des travaux. Une solution de niche mais précieuse pour les chantiers en zone résidentielle sensible.",
+  "priority": "low"
+}

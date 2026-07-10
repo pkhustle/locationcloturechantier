@@ -1,0 +1,11 @@
+{
+  "id": "cloture-secure",
+  "name": "Clôture Sécure",
+  "url": "https://www.cloturesecure.com/",
+  "cities_served": ["montreal", "laval", "longueuil"],
+  "regions_served": ["montreal", "laval", "monteregie"],
+  "fence_types": ["cloture-temporaire", "cloture-panneau-grillage"],
+  "services": { "delivery": true, "install": true, "h24_7": true },
+  "is_partner": false,
+  "notes": "Clôtures de chantier 8 pi × 6 pi; location, livraison et installation dans la région de Montréal, Laval et environs."
+}

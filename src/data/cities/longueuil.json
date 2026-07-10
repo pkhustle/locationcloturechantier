@@ -1,0 +1,44 @@
+{
+  "slug": "longueuil",
+  "name": "Longueuil",
+  "region": "monteregie",
+  "mrc": "Agglomération de Longueuil",
+  "population": 254000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.5312,
+    "lng": -73.5185
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 2.0,
+    "bylaw_name": "Clôture et muret — Ville de Longueuil",
+    "bylaw_url": "https://www3.longueuil.quebec/fr/reglements-principaux/cloture",
+    "permit_url": "https://permisenligne.longueuil.quebec/",
+    "cost_note": "Aucun frais à la demande d'occupation du domaine public; les frais sont fixés après analyse par la Direction des travaux publics.",
+    "lead_time_note": "Demande d'occupation soumise en ligne et analysée par la Direction des travaux publics.",
+    "notes": "L'occupation du domaine public est limitée à la largeur de la propriété; le site doit être remis en état après les travaux."
+  },
+  "boroughs": [
+    "Vieux-Longueuil",
+    "Saint-Hubert",
+    "Greenfield Park"
+  ],
+  "local_context": "Pôle de la Rive-Sud : combinaison de chantiers résidentiels denses et de projets institutionnels près des axes de transport, où la remise en état du domaine public est strictement encadrée.",
+  "nearby_cities": [
+    "montreal",
+    "brossard"
+  ],
+  "providers": [
+    "cloture-secure",
+    "groupe-choquette",
+    "battlefield",
+    "lou-tec",
+    "super-save",
+    "moduloc"
+  ],
+  "pricing_note": "Longueuil : 0,30 $ à 0,80 $ / pi linéaire / mois; livraison souvent intégrée à la zone de la grande région de Montréal.",
+  "unique_fact": "À Longueuil, aucun frais n'est exigé au dépôt de la demande d'occupation du domaine public : ils sont établis après l'analyse par la Direction des travaux publics.",
+  "image": "/images/Cloture-temporaire-avec-renfort.webp",
+  "image_alt": "Clôture de chantier temporaire renforcée à Longueuil"
+}

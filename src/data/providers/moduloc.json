@@ -1,0 +1,11 @@
+{
+  "id": "moduloc",
+  "name": "Modu-Loc",
+  "url": "https://moduloc.ca/fr/",
+  "cities_served": ["montreal", "quebec", "laval", "gatineau", "longueuil"],
+  "regions_served": ["montreal", "capitale-nationale", "laval", "outaouais", "monteregie"],
+  "fence_types": ["cloture-temporaire", "cloture-panneau-grillage", "cloture-evenement"],
+  "services": { "delivery": true, "install": true, "h24_7": false },
+  "is_partner": false,
+  "notes": "Solutions de clôtures robustes pour chantiers et événements à l'échelle nationale."
+}

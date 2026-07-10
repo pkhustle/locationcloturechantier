@@ -1,0 +1,11 @@
+{
+  "slug": "cloture-panneau-grillage",
+  "name": "Panneau grillagé de chantier",
+  "dimensions": ["3,5 m × 2 m", "8 pi × 6 pi"],
+  "material": "Acier galvanisé à mailles soudées",
+  "use_cases": ["chantier de construction", "travaux publics", "sécurisation rapide"],
+  "price_range": "selon la quantité et la durée",
+  "differentiator": "Panneaux ajourés de style Heras : légers, empilables et parfaits pour un long linéaire à sécuriser tout en gardant la visibilité sur le chantier.",
+  "intro": "Le panneau grillagé mobile permet de réaliser rapidement un grand linéaire de clôture temporaire. Sa maille laisse voir la zone de travaux tout en empêchant l'accès physique.",
+  "priority": "med"
+}

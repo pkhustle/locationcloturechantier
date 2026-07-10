@@ -1,0 +1,11 @@
+{
+  "id": "cloture-temporaire-inc",
+  "name": "Clôture Temporaire",
+  "url": "https://cloturetemporaire.com/fr/",
+  "cities_served": ["montreal", "laval"],
+  "regions_served": ["montreal", "laval"],
+  "fence_types": ["cloture-temporaire", "cloture-opaque-brise-vent"],
+  "services": { "delivery": true, "install": true, "h24_7": false },
+  "is_partner": false,
+  "notes": "Location et vente de clôtures temporaires, Montréal et Laval; offres de location flexibles."
+}

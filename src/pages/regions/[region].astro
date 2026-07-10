@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { cityGate } from '../../lib/publishGate';
+import { breadcrumbSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const regions = await getCollection('regions');
+  return regions.map((r) => ({ params: { region: r.id }, props: { region: r.data } }));
+}
+
+const { region } = Astro.props;
+const cities = (await getCollection('cities')).filter((c) => c.data.region === region.slug && cityGate(c.data).indexable);
+
+const path = `/regions/${region.slug}`;
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: region.name, path },
+  ]),
+];
+---
+
+<Base
+  title={`Location de clôture de chantier — ${region.name} | Villes et fournisseurs`}
+  description={`Location de clôture de chantier dans la région ${region.name} : villes desservies, fournisseurs et règles de permis municipal.`}
+  path={path}
+  noindex={cities.length === 0}
+  jsonLd={jsonLd}
+>
+  <main class="container">
+    <nav class="breadcrumbs"><a href="/">Accueil</a> / <span>{region.name}</span></nav>
+
+    <p class="eyebrow">Région administrative</p>
+    <h1>Location de clôture de chantier — {region.name}</h1>
+    {region.description && <p class="lede">{region.description}</p>}
+
+    <section>
+      <h2>Villes desservies</h2>
+      {cities.length > 0 ? (
+        <div class="grid grid-3">
+          {cities.map((c) => (
+            <a class="card" href={`/villes/${c.id}`}>
+              <span class="kicker">Ville</span>
+              <h3>{c.data.name}</h3>
+              <p>Fournisseurs, prix et permis à {c.data.name}.</p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p>Fiches de villes en préparation pour cette région.</p>
+      )}
+    </section>
+  </main>
+
+  <QuoteCTA context={region.name} />
+</Base>

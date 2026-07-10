@@ -1,0 +1,46 @@
+{
+  "slug": "laval",
+  "name": "Laval",
+  "region": "laval",
+  "mrc": "Ville de Laval",
+  "population": 440000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.6066,
+    "lng": -73.7124
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Occupation temporaire de la voie publique — Ville de Laval",
+    "bylaw_url": "https://www.laval.ca/reglements-permis/trouver-mon-permis/obstruction-voie-publique/",
+    "permit_url": "https://www.laval.ca/reglements-permis/trouver-mon-permis/haie-cloture-muret/",
+    "cost_note": "Permis d'occupation temporaire de la voie publique lorsque la clôture empiète sur le trottoir ou la chaussée.",
+    "lead_time_note": "Prévoir 10 jours ouvrables (15 jours si une intervention sur un système de signalisation est requise).",
+    "notes": "Une clôture de chantier empiétant sur l'emprise publique (trottoir, chaussée, piste cyclable) exige un permis d'occupation."
+  },
+  "boroughs": [
+    "Chomedey",
+    "Sainte-Rose",
+    "Vimont",
+    "Duvernay",
+    "Fabreville"
+  ],
+  "local_context": "Territoire en croissance résidentielle et commerciale : beaucoup de chantiers en bordure d'artères où le maintien de la circulation piétonne et automobile encadre l'installation de la clôture.",
+  "nearby_cities": [
+    "montreal"
+  ],
+  "providers": [
+    "cloture-secure",
+    "groupe-choquette",
+    "battlefield",
+    "lou-tec",
+    "super-save",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Laval : 0,30 $ à 0,80 $ / pi linéaire / mois; zone de livraison généralement partagée avec la grande région de Montréal.",
+  "unique_fact": "À Laval, le délai d'obtention du permis d'occupation passe de 10 à 15 jours ouvrables lorsqu'un système de signalisation routière doit être modifié.",
+  "image": "/images/Barriere-standard.webp",
+  "image_alt": "Panneaux de clôture grillagée standard sur un chantier à Laval"
+}

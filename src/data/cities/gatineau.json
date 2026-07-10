@@ -1,0 +1,40 @@
+{
+  "slug": "gatineau",
+  "name": "Gatineau",
+  "region": "outaouais",
+  "mrc": "Ville de Gatineau",
+  "population": 290000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.4765,
+    "lng": -75.7013
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Permis et certificats d'autorisation en urbanisme — Ville de Gatineau",
+    "bylaw_url": "https://www.gatineau.ca/portail/default.aspx?p=guichet_municipal%2Freglements_municipaux%2Fclotures_residentielles",
+    "permit_url": "https://www.gatineau.ca/portail/default.aspx?p=guichet_municipal%2Fpermis_certificats_autorisation_urbanisme",
+    "cost_note": "Certificat d'autorisation requis pour une clôture à usage non résidentiel.",
+    "lead_time_note": "Faire la demande via gatineau.ca/permis avant le début des travaux.",
+    "notes": "Une clôture ne peut empiéter dans l'emprise d'une rue ou dans le domaine public sans permis d'occupation."
+  },
+  "boroughs": [
+    "Hull",
+    "Aylmer",
+    "Gatineau",
+    "Buckingham",
+    "Masson-Angers"
+  ],
+  "local_context": "Marché frontalier avec Ottawa : les chantiers institutionnels et fédéraux y sont nombreux et demandent souvent des clôtures robustes de 6 à 8 pi avec contrôle d'accès.",
+  "nearby_cities": [],
+  "providers": [
+    "battlefield",
+    "lou-tec",
+    "moduloc"
+  ],
+  "pricing_note": "Gatineau : tarifs comparables au reste du Québec (0,30 $ à 0,80 $ / pi linéaire / mois); la proximité d'Ottawa peut élargir le choix de fournisseurs.",
+  "unique_fact": "À Gatineau, l'installation d'une clôture à usage non résidentiel requiert un certificat d'autorisation, contrairement à une clôture résidentielle standard.",
+  "image": "/images/Cloture-sur-glissiere-en-beton.webp",
+  "image_alt": "Clôture de chantier montée sur glissière de béton à Gatineau"
+}

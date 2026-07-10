@@ -1,0 +1,11 @@
+{
+  "slug": "cloture-temporaire",
+  "name": "Clôture temporaire",
+  "dimensions": ["8 pi × 6 pi", "7,5 pi × 6 pi"],
+  "material": "Acier galvanisé, maille soudée, bases en béton",
+  "use_cases": ["chantier de construction", "sécurisation de périmètre", "démolition"],
+  "price_range": "0,30 $ à 0,80 $ / pi linéaire / mois",
+  "differentiator": "Le format le plus courant au Québec : léger, rapide à installer et conforme aux exigences de sécurisation de chantier.",
+  "intro": "La clôture temporaire de chantier est la solution de référence pour délimiter et sécuriser un site de construction. Montée sur bases de béton, elle s'installe et se déplace rapidement au fil de l'avancement des travaux.",
+  "priority": "high"
+}

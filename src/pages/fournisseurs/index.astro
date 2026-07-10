@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+
+const providers = (await getCollection('providers')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const path = '/fournisseurs';
+const jsonLd = [breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Fournisseurs', path }])];
+---
+
+<Base
+  title="Fournisseurs de location de clôture de chantier au Québec"
+  description="Répertoire des fournisseurs de location de clôture de chantier au Québec : secteurs desservis, types de clôture et services (livraison, installation, 24/7)."
+  path={path}
+  jsonLd={jsonLd}
+>
+  <main class="container">
+    <nav class="breadcrumbs"><a href="/">Accueil</a> / <span>Fournisseurs</span></nav>
+    <p class="eyebrow">Répertoire · Québec</p>
+    <h1>Fournisseurs de location de clôture de chantier</h1>
+    <p class="lede">
+      Un répertoire indépendant des entreprises de location de clôture de chantier au Québec.
+      Pour comparer rapidement selon votre secteur, <a href="/soumission">demandez une soumission</a>.
+    </p>
+
+    <ul class="providers">
+      {providers.map((p) => (
+        <li>
+          <span>
+            <span class="name"><a href={p.data.url} rel="nofollow noopener" target="_blank">{p.data.name}</a></span>
+            <div class="tags">{p.data.notes}</div>
+          </span>
+          <span class="tags">{p.data.cities_served.length} villes</span>
+        </li>
+      ))}
+    </ul>
+  </main>
+
+  <QuoteCTA />
+</Base>

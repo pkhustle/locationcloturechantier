@@ -1,0 +1,11 @@
+{
+  "id": "super-save",
+  "name": "Super Save — Location de Clôture",
+  "url": "https://www.supersave.ca/supereconocloture/",
+  "cities_served": ["montreal", "laval", "longueuil"],
+  "regions_served": ["montreal", "laval", "monteregie"],
+  "fence_types": ["cloture-temporaire", "cloture-panneau-grillage"],
+  "services": { "delivery": true, "install": true, "h24_7": true },
+  "is_partner": false,
+  "notes": "Livraison, installation et désinstallation du périmètre; service d'urgence 24/7."
+}

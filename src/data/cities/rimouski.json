@@ -1,0 +1,9 @@
+{
+  "slug": "rimouski",
+  "name": "Rimouski",
+  "region": "bas-saint-laurent",
+  "demand_tier": 3,
+  "local_context": "Ville-centre du Bas-Saint-Laurent.",
+  "providers": [],
+  "_note": "STUB — Tier-3 city with no verified permit data and <2 providers. The publish gate will render this NOINDEX and exclude it from the sitemap until enriched. This proves the thin-content safeguard works."
+}

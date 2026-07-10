@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { cityGate } from '../lib/publishGate';
+
+const cities = (await getCollection('cities'))
+  .filter((c) => cityGate(c.data).indexable)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+const types = await getCollection('types');
+---
+
+<Base
+  title="Demander une soumission — location de clôture de chantier"
+  description="Recevez gratuitement des soumissions de fournisseurs de clôture de chantier qui desservent votre secteur au Québec."
+  path="/soumission"
+  noindex={true}
+>
+  <main class="container">
+    <p class="eyebrow">Gratuit · sans engagement</p>
+    <h1>Demander une soumission</h1>
+    <p class="lede">
+      Décrivez votre chantier et recevez des soumissions de fournisseurs qui desservent votre secteur.
+    </p>
+
+    <!-- Wire `action` to your form backend (Cloudflare/Netlify function) that routes leads to is_partner providers. -->
+    <form class="form" method="post" action="/api/soumission" data-netlify="true" name="soumission">
+      <label>Ville du chantier
+        <select name="ville" required>
+          <option value="">Choisir…</option>
+          {cities.map((c) => <option value={c.data.slug}>{c.data.name}</option>)}
+          <option value="autre">Autre / ailleurs au Québec</option>
+        </select>
+      </label>
+      <label>Type de clôture
+        <select name="type">
+          <option value="">Indifférent</option>
+          {types.map((t) => <option value={t.data.slug}>{t.data.name}</option>)}
+        </select>
+      </label>
+      <label>Longueur approximative (pi linéaires)
+        <input type="number" name="longueur" min="0" placeholder="ex. 200" />
+      </label>
+      <label>Durée prévue
+        <input type="text" name="duree" placeholder="ex. 3 mois" />
+      </label>
+      <label>Courriel
+        <input type="email" name="email" required placeholder="vous@exemple.com" />
+      </label>
+      <label>Téléphone
+        <input type="tel" name="telephone" placeholder="(514) 000-0000" />
+      </label>
+      <label>Détails du projet
+        <textarea name="details" rows="4" placeholder="Adresse, dates, contraintes particulières…"></textarea>
+      </label>
+      <button class="btn" type="submit">Envoyer ma demande</button>
+    </form>
+  </main>
+</Base>

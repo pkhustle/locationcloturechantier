@@ -1,0 +1,206 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { cityGate } from '../../lib/publishGate';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../../lib/schema';
+import { SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const cities = await getCollection('cities');
+  return cities.map((c) => ({ params: { ville: c.id }, props: { city: c.data } }));
+}
+
+const { city } = Astro.props;
+const gate = cityGate(city);
+
+const allProviders = await getCollection('providers');
+const cityProviders = allProviders.filter((p) => city.providers.includes(p.data.id));
+
+const allCities = await getCollection('cities');
+const nearby = allCities.filter((c) => city.nearby_cities.includes(c.id) && cityGate(c.data).indexable);
+
+const allTypes = await getCollection('types');
+const featuredTypes = allTypes.filter((t) => ['cloture-temporaire', 'cloture-panneau-grillage', 'cloture-opaque-brise-vent'].includes(t.id));
+
+const p = city.permit;
+const hasCombo = city.demand_tier === 1; // combo pages only for Tier-1 cities
+
+const faqItems = [
+  {
+    q: `Faut-il un permis pour une clôture de chantier à ${city.name} ?`,
+    a: p?.public_domain_permit_required
+      ? `Oui : à ${city.name}, un permis est requis lorsque la clôture occupe le domaine public. ${p?.notes ?? ''}`.trim()
+      : `Vérifiez le règlement municipal de ${city.name} avant l’installation.`,
+  },
+  {
+    q: `Quelle hauteur minimale à ${city.name} ?`,
+    a: p?.min_height_m ? `La hauteur minimale usuelle est de ${p.min_height_m} m.` : 'Consultez le règlement municipal applicable.',
+  },
+  {
+    q: `Combien coûte la location à ${city.name} ?`,
+    a: city.pricing_note ?? 'Les tarifs varient selon la taille et la durée du chantier; demandez une soumission.',
+  },
+];
+
+const path = `/villes/${city.slug}`;
+const jsonLd = gate.indexable
+  ? [
+      breadcrumbSchema([
+        { name: 'Accueil', path: '/' },
+        { name: city.name, path },
+      ]),
+      serviceSchema({
+        name: `Location de clôture de chantier à ${city.name}`,
+        description: `Fournisseurs, prix et règles de permis pour la location de clôture de chantier à ${city.name}, ${city.mrc ?? 'Québec'}.`,
+        areaName: city.name,
+      }),
+      faqSchema(faqItems),
+    ]
+  : [];
+---
+
+<Base
+  title={`Location de clôture de chantier à ${city.name} | Prix, permis et fournisseurs`}
+  description={`Louer une clôture de chantier à ${city.name} : fournisseurs locaux, prix au pied linéaire et règles de permis municipal (occupation du domaine public, hauteur minimale).`}
+  path={path}
+  noindex={!gate.indexable}
+  jsonLd={jsonLd}
+>
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Accueil</a> / <span>{city.name}</span>
+    </nav>
+
+    {!gate.indexable && (
+      <p class="notice">
+        Fiche en cours d’enrichissement — {gate.passed}/4 critères de données remplis (noindex).
+      </p>
+    )}
+
+    <p class="eyebrow">{city.mrc ?? 'Québec'}</p>
+    <h1>Location de clôture de chantier à {city.name}</h1>
+
+    {city.local_context && <p class="lede">{city.local_context}</p>}
+
+    <div class="city-actions">
+      <a class="btn" href="/soumission">Demander une soumission à {city.name}</a>
+      <a class="btn btn-outline" href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>📞 {SITE.phone}</a>
+    </div>
+
+    <figure class="city-photo">
+      {city.image ? (
+        <img
+          src={city.image}
+          alt={city.image_alt ?? `Clôture de chantier à ${city.name}, ${city.mrc ?? 'Québec'}`}
+          width="1120"
+          height="480"
+          loading="eager"
+        />
+      ) : (
+        <div class="city-photo-ph">
+          <span>[ Photo — clôture de chantier à {city.name} ]</span>
+          <small>Photo à venir</small>
+        </div>
+      )}
+    </figure>
+
+    {p && (
+      <section>
+        <h2>Permis et règlement à {city.name}</h2>
+        <p>
+          {city.unique_fact ?? `Vérifiez le règlement municipal de ${city.name} avant d’installer votre clôture de chantier.`}
+        </p>
+        <div class="panel moat">
+          <dl class="datalist">
+            {p.public_domain_permit_required !== undefined && (
+              <div>
+                <dt>Permis d’occupation du domaine public</dt>
+                <dd>{p.public_domain_permit_required ? 'Requis lorsque la clôture empiète sur le domaine public.' : 'Non requis dans la plupart des cas.'}</dd>
+              </div>
+            )}
+            {p.min_height_m && (
+              <div><dt>Hauteur minimale usuelle</dt><dd>{p.min_height_m} m</dd></div>
+            )}
+            {p.lead_time_note && (
+              <div><dt>Délai à prévoir</dt><dd>{p.lead_time_note}</dd></div>
+            )}
+            {p.cost_note && (
+              <div><dt>Frais</dt><dd>{p.cost_note}</dd></div>
+            )}
+            {p.bylaw_url && (
+              <div>
+                <dt>Règlement / démarche</dt>
+                <dd><a href={p.bylaw_url} rel="nofollow noopener" target="_blank">{p.bylaw_name ?? 'Voir le règlement municipal'}</a></dd>
+              </div>
+            )}
+          </dl>
+        </div>
+        <p>
+          Ces règles municipales s’ajoutent aux exigences de la CNESST.
+          Voir le <a href="/guides/permis-municipal-cloture-chantier">guide des permis par ville</a> et le
+          <a href="/guides/prix-location-cloture-chantier"> guide des prix</a>.
+        </p>
+      </section>
+    )}
+
+    {cityProviders.length > 0 && (
+      <section>
+        <h2>Fournisseurs desservant {city.name}</h2>
+        <ul class="providers">
+          {cityProviders.map((pr) => (
+            <li>
+              <span class="name"><a href={pr.data.url} rel="nofollow noopener" target="_blank">{pr.data.name}</a></span>
+              <span class="tags">
+                {pr.data.services?.install ? 'installation · ' : ''}
+                {pr.data.services?.delivery ? 'livraison · ' : ''}
+                {pr.data.services?.h24_7 ? '24/7' : ''}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p><a href="/soumission">Demandez une soumission</a> pour comparer ces fournisseurs pour votre chantier.</p>
+      </section>
+    )}
+
+    {city.pricing_note && (
+      <section>
+        <h2>Prix à {city.name}</h2>
+        <p>{city.pricing_note}</p>
+      </section>
+    )}
+
+    <section>
+      <h2>Types de clôture disponibles</h2>
+      <div class="section-links">
+        {featuredTypes.map((t) => <a href={`/types/${t.id}`}>{t.data.name}</a>)}
+      </div>
+      {hasCombo && (
+        <p style="margin-top:14px">
+          → <a href={`/villes/${city.slug}/cloture-temporaire`}>Clôture temporaire à {city.name}</a>
+        </p>
+      )}
+    </section>
+
+    {nearby.length > 0 && (
+      <section>
+        <h2>Villes à proximité</h2>
+        <div class="section-links">
+          {nearby.map((c) => <a href={`/villes/${c.id}`}>{c.data.name}</a>)}
+        </div>
+      </section>
+    )}
+
+    <section class="faq">
+      <h2>Questions fréquentes — {city.name}</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
+  </main>
+
+  <QuoteCTA context={city.name} />
+</Base>

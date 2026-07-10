@@ -1,0 +1,319 @@
+<title>Cluster Map — Location Clôture Chantier</title>
+<style>
+  :root {
+    --ground: #F4F5F3;
+    --panel: #FFFFFF;
+    --ink: #1A1E22;
+    --ink-soft: #4A525A;
+    --line: #D9DCD6;
+    --amber: #E8850C;
+    --amber-soft: #FBEBD3;
+    --steel: #3E6B7E;
+    --steel-soft: #E2EAEC;
+    --muted: #8A9098;
+    --muted-soft: #EDEEEB;
+    --shadow: 0 1px 2px rgba(26,30,34,.06), 0 8px 24px rgba(26,30,34,.06);
+    --radius: 12px;
+    --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14181B; --panel: #1C2126; --ink: #EAECE9; --ink-soft: #A6ADB2;
+      --line: #2C333A; --amber: #F49B2C; --amber-soft: #3A2C15; --steel: #6FA3B8;
+      --steel-soft: #1E2C33; --muted: #7A828A; --muted-soft: #232A30;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F4F5F3; --panel: #FFFFFF; --ink: #1A1E22; --ink-soft: #4A525A;
+    --line: #D9DCD6; --amber: #E8850C; --amber-soft: #FBEBD3; --steel: #3E6B7E;
+    --steel-soft: #E2EAEC; --muted: #8A9098; --muted-soft: #EDEEEB;
+    --shadow: 0 1px 2px rgba(26,30,34,.06), 0 8px 24px rgba(26,30,34,.06);
+  }
+  :root[data-theme="dark"] {
+    --ground: #14181B; --panel: #1C2126; --ink: #EAECE9; --ink-soft: #A6ADB2;
+    --line: #2C333A; --amber: #F49B2C; --amber-soft: #3A2C15; --steel: #6FA3B8;
+    --steel-soft: #1E2C33; --muted: #7A828A; --muted-soft: #232A30;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 40px) 80px; }
+
+  /* Header */
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--amber); display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--amber); display: inline-block; }
+  h1 {
+    font-family: var(--sans); font-weight: 680; font-size: clamp(28px, 4.4vw, 44px);
+    line-height: 1.05; letter-spacing: -.02em; margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: clamp(15px, 1.6vw, 17px); color: var(--ink-soft); max-width: 62ch; margin: 0; }
+
+  /* Stat strip */
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 16px; box-shadow: var(--shadow); flex: 1 1 130px;
+  }
+  .stat b { font-family: var(--mono); font-size: 24px; font-variant-numeric: tabular-nums; display: block; letter-spacing: -.01em; }
+  .stat span { font-size: 12.5px; color: var(--ink-soft); }
+
+  /* Map */
+  .map-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin: 32px 0 40px; padding: 8px; overflow-x: auto;
+  }
+  svg { display: block; width: 100%; height: auto; min-width: 640px; }
+  .link-line { stroke: var(--line); stroke-width: 2; }
+  .link-moat { stroke: var(--amber); stroke-width: 2.5; stroke-dasharray: 5 4; opacity: .8; }
+  .node-label { font-family: var(--mono); font-size: 13px; font-weight: 600; fill: var(--ink); }
+  .node-sub { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-soft); letter-spacing: .04em; }
+  .node-hit { cursor: pointer; }
+  .node-hit:hover .node-body { filter: brightness(1.04); }
+  .node-hit:focus-visible { outline: none; }
+  .node-hit:focus-visible .node-body { stroke: var(--amber); stroke-width: 3; }
+
+  /* Section */
+  h2 {
+    font-size: 13px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em;
+    color: var(--ink-soft); margin: 46px 0 4px; display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .count { color: var(--muted); font-size: 12px; }
+  .cluster-tag {
+    width: 9px; height: 9px; border-radius: 2px; display: inline-block;
+  }
+  .section-note { color: var(--ink-soft); font-size: 14px; margin: 8px 0 18px; max-width: 74ch; }
+  .section-note strong { color: var(--ink); }
+
+  /* Page rows */
+  .rows { display: grid; gap: 8px; }
+  .row {
+    display: grid; grid-template-columns: 1fr auto; gap: 12px 16px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px; box-shadow: var(--shadow);
+  }
+  .row.moat { border-color: color-mix(in srgb, var(--amber) 45%, var(--line)); }
+  .row-main { min-width: 0; }
+  .url { font-family: var(--mono); font-size: 13px; color: var(--steel); font-weight: 600; word-break: break-word; }
+  .row.moat .url { color: var(--amber); }
+  .desc { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .kw { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+
+  /* Priority chips */
+  .chip {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+    align-self: start;
+  }
+  .p-high { background: var(--amber-soft); color: var(--amber); border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent); }
+  .p-med  { background: var(--steel-soft); color: var(--steel); border: 1px solid color-mix(in srgb, var(--steel) 30%, transparent); }
+  .p-low  { background: var(--muted-soft); color: var(--muted); border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent); }
+
+  /* Build sequence */
+  .seq { display: grid; gap: 10px; counter-reset: step; margin-top: 18px; }
+  .step {
+    display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px; box-shadow: var(--shadow);
+  }
+  .step .num {
+    counter-increment: step; font-family: var(--mono); font-size: 15px; font-weight: 700;
+    width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center;
+    background: var(--ink); color: var(--ground);
+  }
+  .step:first-child .num { background: var(--amber); color: #fff; }
+  .step .num::before { content: counter(step, decimal-leading-zero); }
+  .step .txt { font-size: 14px; }
+  .step .txt b { display: block; margin-bottom: 1px; }
+  .step .txt span { color: var(--ink-soft); font-size: 13px; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px 22px; margin: 22px 0 0; padding: 16px 18px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+  .legend div { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-soft); font-family: var(--mono); }
+  .sw { width: 14px; height: 14px; border-radius: 4px; }
+
+  footer { margin-top: 54px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .draw { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1s ease forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .row, .stat, .step { animation: rise .5s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; }
+    .chip { justify-self: start; }
+  }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">SEO Content Architecture · Québec</p>
+  <h1>Location Clôture Chantier — Cluster Map</h1>
+  <p class="lede">Hub-and-spoke structure clustered by <strong>shared Google top-10 URLs</strong> (SERP overlap), not text similarity. One pillar absorbs the synonym head-terms; guides form the ranking moat; cities roll out in demand tiers.</p>
+
+  <div class="stats">
+    <div class="stat"><b>~57</b><span>total pages planned</span></div>
+    <div class="stat"><b>1</b><span>pillar (synonym cluster)</span></div>
+    <div class="stat"><b>35+6</b><span>city + regional pages</span></div>
+    <div class="stat"><b>7</b><span>guide pages (the moat)</span></div>
+    <div class="stat"><b>6–12<span style="font-size:13px">mo</span></b><span>head-term top-3 target</span></div>
+  </div>
+
+  <div class="map-card" role="img" aria-label="Radial hub-and-spoke diagram: the pillar page at center connects to five clusters — Guides, Villes, Types, Directory, and Events.">
+    <svg viewBox="0 0 900 500">
+      <!-- connectors -->
+      <line class="link-moat draw" x1="450" y1="250" x2="450" y2="120"/>
+      <line class="link-line draw" x1="450" y1="250" x2="742" y2="168"/>
+      <line class="link-line draw" x1="450" y1="250" x2="158" y2="168"/>
+      <line class="link-line draw" x1="450" y1="250" x2="672" y2="410"/>
+      <line class="link-line draw" x1="450" y1="250" x2="228" y2="410"/>
+
+      <!-- Guides (moat) -->
+      <a class="node-hit" href="#guides" tabindex="0" aria-label="Guides cluster, 7 pages, high priority moat">
+        <g>
+          <rect class="node-body" x="342" y="66" width="216" height="60" rx="12" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="2"/>
+          <text class="node-label" x="450" y="92" text-anchor="middle" fill="var(--amber)">GUIDES · le moat</text>
+          <text class="node-sub" x="450" y="110" text-anchor="middle" fill="var(--amber)">7 pages · HIGH</text>
+        </g>
+      </a>
+
+      <!-- Villes -->
+      <a class="node-hit" href="#villes" tabindex="0" aria-label="Villes cluster, 41 pages">
+        <g>
+          <rect class="node-body" x="636" y="138" width="212" height="60" rx="12" fill="var(--steel-soft)" stroke="var(--steel)" stroke-width="1.5"/>
+          <text class="node-label" x="742" y="164" text-anchor="middle">VILLES</text>
+          <text class="node-sub" x="742" y="182" text-anchor="middle">35 + 6 régions · tiers</text>
+        </g>
+      </a>
+
+      <!-- Types -->
+      <a class="node-hit" href="#types" tabindex="0" aria-label="Types cluster, 5 pages">
+        <g>
+          <rect class="node-body" x="52" y="138" width="212" height="60" rx="12" fill="var(--steel-soft)" stroke="var(--steel)" stroke-width="1.5"/>
+          <text class="node-label" x="158" y="164" text-anchor="middle">TYPES</text>
+          <text class="node-sub" x="158" y="182" text-anchor="middle">5 pages · service</text>
+        </g>
+      </a>
+
+      <!-- Directory -->
+      <a class="node-hit" href="#directory" tabindex="0" aria-label="Directory and conversion cluster">
+        <g>
+          <rect class="node-body" x="566" y="382" width="212" height="60" rx="12" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+          <text class="node-label" x="672" y="408" text-anchor="middle">RÉPERTOIRE</text>
+          <text class="node-sub" x="672" y="426" text-anchor="middle">/soumission · conversion</text>
+        </g>
+      </a>
+
+      <!-- Events -->
+      <a class="node-hit" href="#events" tabindex="0" aria-label="Events cluster, low priority">
+        <g>
+          <rect class="node-body" x="122" y="382" width="212" height="60" rx="12" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+          <text class="node-label" x="228" y="408" text-anchor="middle">ÉVÉNEMENT</text>
+          <text class="node-sub" x="228" y="426" text-anchor="middle">1 page · LOW</text>
+        </g>
+      </a>
+
+      <!-- Pillar -->
+      <g>
+        <circle cx="450" cy="250" r="74" fill="var(--ink)"/>
+        <circle cx="450" cy="250" r="74" fill="none" stroke="var(--amber)" stroke-width="3"/>
+        <text x="450" y="240" text-anchor="middle" class="node-label" fill="var(--ground)" style="font-size:13px">PILLAR</text>
+        <text x="450" y="258" text-anchor="middle" fill="var(--ground)" style="font-family:var(--mono);font-size:10px;opacity:.85">location clôture</text>
+        <text x="450" y="271" text-anchor="middle" fill="var(--ground)" style="font-family:var(--mono);font-size:10px;opacity:.85">chantier · /</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legend" aria-hidden="false">
+    <div><span class="sw" style="background:var(--amber)"></span> HIGH — build first</div>
+    <div><span class="sw" style="background:var(--steel)"></span> MED — phase 2</div>
+    <div><span class="sw" style="background:var(--muted)"></span> LOW — later / adjacent</div>
+    <div><span class="sw" style="background:var(--amber);border:2px dashed var(--panel);box-shadow:0 0 0 1px var(--amber)"></span> dashed = moat link</div>
+  </div>
+
+  <!-- PILLAR -->
+  <h2><span class="cluster-tag" style="background:var(--amber)"></span> Pillar <span class="count">1 page</span></h2>
+  <p class="section-note"><strong>Merge, don't split.</strong> "location clôture chantier", "…temporaire", "…barrière de sécurité" and "…construction" share 7+ identical top-10 URLs — Google ranks them as one page. Building separate pages would cannibalize.</p>
+  <div class="rows">
+    <div class="row moat">
+      <div class="row-main">
+        <div class="url">/</div>
+        <div class="desc">Location de clôture de chantier au Québec — carries the head-term fight. 2 500–4 000 mots.</div>
+        <div class="kw">kw: location clôture chantier · temporaire · barrière sécurité · construction</div>
+      </div>
+      <span class="chip p-high">Pillar</span>
+    </div>
+  </div>
+
+  <!-- GUIDES -->
+  <h2 id="guides"><span class="cluster-tag" style="background:var(--amber)"></span> Cluster C — Guides <span class="count">7 pages · the moat</span></h2>
+  <p class="section-note">Distinct informational SERP (RBQ, CNESST, LégisQuébec). <strong>Where a lead-gen site out-ranks operators</strong> and ranks fastest on a new domain. Closest competitor model: soumissionrenovation.ca.</p>
+  <div class="rows">
+    <div class="row moat"><div class="row-main"><div class="url">/guides/prix-location-cloture-chantier</div><div class="desc">Real data: 0,30–0,80 $/pi lin/mois · 15 $/jour/panneau 8pi · livraison + installation + surcharge carburant + retrait.</div></div><span class="chip p-high">High</span></div>
+    <div class="row moat"><div class="row-main"><div class="url">/outils/calculateur-prix</div><div class="desc">Estimateur interactif — aimant à liens, citable par les IA.</div></div><span class="chip p-high">High</span></div>
+    <div class="row moat"><div class="row-main"><div class="url">/guides/permis-municipal-cloture-chantier</div><div class="desc">Base de données des permis — règlement + lien permis par ville. Moat imbattable.</div></div><span class="chip p-high">High</span></div>
+    <div class="row moat"><div class="row-main"><div class="url">/guides/normes-cnesst-rbq-cloture-chantier</div><div class="desc">Avis d'ouverture 10 jours · RBQ · Code de sécurité S-2.1 r.4.</div></div><span class="chip p-high">High</span></div>
+    <div class="row"><div class="row-main"><div class="url">/guides/comment-securiser-chantier</div><div class="desc">Inclut hors-heures + vacances de la construction (saisonnier).</div></div><span class="chip p-med">Med</span></div>
+    <div class="row"><div class="row-main"><div class="url">/guides/comment-choisir-cloture-chantier</div><div class="desc">Guide de décision type/hauteur/durée → route vers /soumission.</div></div><span class="chip p-med">Med</span></div>
+    <div class="row"><div class="row-main"><div class="url">/guides/hauteur-cloture-chantier</div><div class="desc">PAA courant (1,8 m) — alimente le hub des permis.</div></div><span class="chip p-low">Low</span></div>
+  </div>
+
+  <!-- VILLES -->
+  <h2 id="villes"><span class="cluster-tag" style="background:var(--steel)"></span> Cluster B — Villes <span class="count">35 + 6 régions · tiered</span></h2>
+  <p class="section-note"><strong>Intent-bleed warning:</strong> some city SERPs pull in permanent residential fence installers — lock "<em>location … chantier/temporaire</em>" intent. Each page needs unique local data: bylaw + permit link + local providers.</p>
+  <div class="rows">
+    <div class="row"><div class="row-main"><div class="url">/villes/{montreal, quebec, laval, gatineau, longueuil}</div><div class="desc">Tier 1 — launch. + combos /villes/{ville}/cloture-temporaire (Tier-1 only).</div></div><span class="chip p-high">Tier 1</span></div>
+    <div class="row"><div class="row-main"><div class="url">/villes/{sherbrooke … granby}</div><div class="desc">Tier 2 — 10 cities, wk 5–12.</div><div class="kw">Trois-Rivières · Lévis · Saguenay · Terrebonne · Brossard · Repentigny · Drummondville · St-Jean-sur-Richelieu</div></div><span class="chip p-med">Tier 2</span></div>
+    <div class="row"><div class="row-main"><div class="url">/villes/{…20 more}</div><div class="desc">Tier 3 — wk 13–24. Only cities with unique local data get a page.</div></div><span class="chip p-low">Tier 3</span></div>
+    <div class="row"><div class="row-main"><div class="url">/regions/{monteregie, laurentides, lanaudiere, estrie, capitale-nationale, outaouais}</div><div class="desc">Regional hubs — capture long-tail + concentrate internal-link equity.</div></div><span class="chip p-med">Hubs</span></div>
+  </div>
+
+  <!-- TYPES -->
+  <h2 id="types"><span class="cluster-tag" style="background:var(--steel)"></span> Cluster A — Types <span class="count">5 pages</span></h2>
+  <p class="section-note">"clôture temporaire" overlaps the pillar → differentiate by <strong>product-spec intent</strong>. "mobile" &amp; "panneau" SERPs are EU-dominated (weak QC demand) → build lean.</p>
+  <div class="rows">
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-temporaire</div><div class="desc">Specs/dimensions — differentiated from pillar.</div></div><span class="chip p-high">High</span></div>
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-panneau-grillage</div><div class="desc">Panneaux maille 6pi/8pi, style Heras.</div></div><span class="chip p-med">Med</span></div>
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-opaque-brise-vent</div><div class="desc">Toile / opaque — intimité, poussière, chantiers urbains.</div></div><span class="chip p-med">Med</span></div>
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-mobile</div><div class="desc">SERP EU-lourd; demande QC mince.</div></div><span class="chip p-low">Low</span></div>
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-anti-bruit</div><div class="desc">Niche — lié aux règlements de bruit.</div></div><span class="chip p-low">Low</span></div>
+  </div>
+
+  <!-- DIRECTORY -->
+  <h2 id="directory"><span class="cluster-tag" style="background:var(--muted)"></span> Cluster E — Répertoire &amp; conversion <span class="count">2 pages</span></h2>
+  <div class="rows">
+    <div class="row"><div class="row-main"><div class="url">/fournisseurs</div><div class="desc">Répertoire de fournisseurs — valeur réelle + routage des leads.</div></div><span class="chip p-med">Med</span></div>
+    <div class="row moat"><div class="row-main"><div class="url">/soumission</div><div class="desc">Formulaire de demande — conversion PRINCIPALE, liée depuis chaque page.</div></div><span class="chip p-high">High</span></div>
+  </div>
+
+  <!-- EVENTS -->
+  <h2 id="events"><span class="cluster-tag" style="background:var(--muted)"></span> Cluster D — Événement <span class="count">1 page · adjacent</span></h2>
+  <p class="section-note">Completely different SERP (chapiteaux, scènes, salles) — zero fence-rental overlap. One page, clearly separated. Phase 3+.</p>
+  <div class="rows">
+    <div class="row"><div class="row-main"><div class="url">/types/cloture-evenement</div><div class="desc">Location clôture événement / festival.</div></div><span class="chip p-low">Low</span></div>
+  </div>
+
+  <!-- BUILD SEQUENCE -->
+  <h2><span class="cluster-tag" style="background:var(--ink)"></span> Build sequence</h2>
+  <p class="section-note">Guides rank fastest on a fresh domain and generate the authority + internal links that push the pillar head-term into the top 3.</p>
+  <div class="seq">
+    <div class="step"><span class="num"></span><span class="txt"><b>Pillar + /soumission</b><span>Head-term page and the conversion form every page links to.</span></span></div>
+    <div class="step"><span class="num"></span><span class="txt"><b>Guides: prix · calculateur · permis · CNESST/RBQ</b><span>The moat — weakest (content-based) competition, ranks in 2–4 months.</span></span></div>
+    <div class="step"><span class="num"></span><span class="txt"><b>Tier-1 cities (5) + /types/cloture-temporaire</b><span>First geo footprint + the strongest type page.</span></span></div>
+    <div class="step"><span class="num"></span><span class="txt"><b>Tier-2 cities + remaining types + comment-choisir / sécuriser</b><span>Expand coverage and internal linking.</span></span></div>
+    <div class="step"><span class="num"></span><span class="txt"><b>Tier-3 cities + regional hubs + events + directory depth</b><span>Full Québec coverage; push pillar to top 3.</span></span></div>
+  </div>
+
+  <footer>Clustered from live Québec SERPs · July 2026 · method: shared top-10 URL overlap</footer>
+</div>

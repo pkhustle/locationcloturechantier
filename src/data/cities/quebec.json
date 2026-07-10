@@ -1,0 +1,43 @@
+{
+  "slug": "quebec",
+  "name": "Québec",
+  "region": "capitale-nationale",
+  "mrc": "Ville de Québec",
+  "population": 550000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 46.8139,
+    "lng": -71.208
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement — clôture, haie et muret décoratif (Ville de Québec)",
+    "bylaw_url": "https://www.ville.quebec.qc.ca/docs/reglementation/66_cloture_haie_muret_decoratif.pdf",
+    "permit_url": "https://www.ville.quebec.qc.ca/citoyens/reglements_permis/repertoire_fiches.aspx",
+    "cost_note": "Frais d'occupation du domaine public selon la fiche applicable.",
+    "lead_time_note": "Vérifier la fiche de permis correspondante avant le début des travaux.",
+    "notes": "La sécurisation du chantier relève aussi du Code de sécurité pour les travaux de construction (S-2.1, r. 4) appliqué par la CNESST."
+  },
+  "boroughs": [
+    "La Cité-Limoilou",
+    "Sainte-Foy–Sillery–Cap-Rouge",
+    "Les Rivières",
+    "Charlesbourg",
+    "Beauport"
+  ],
+  "local_context": "Le centre historique et les secteurs patrimoniaux imposent souvent des exigences visuelles supplémentaires : une toile ou un habillage de clôture peut être demandé pour les chantiers visibles depuis la voie publique.",
+  "nearby_cities": [
+    "levis"
+  ],
+  "providers": [
+    "battlefield",
+    "lou-tec",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Ville de Québec : 0,30 $ à 0,80 $ / pi linéaire / mois; les frais de livraison varient selon l'éloignement du chantier.",
+  "unique_fact": "Certains secteurs patrimoniaux de la Ville de Québec ajoutent des exigences d'intégration visuelle pour les installations temporaires.",
+  "image": "/images/barriere-sur-bloc-de-beton-1.webp",
+  "image_alt": "Clôture de chantier mobile sur blocs de béton à Québec"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "battlefield",
+  "name": "Location d'équipement Battlefield",
+  "url": "https://www.battlefieldequipment.ca/fr/location-dequipement/cl%C3%B4tures-de-chantier",
+  "cities_served": ["montreal", "quebec", "laval", "gatineau", "longueuil"],
+  "regions_served": ["montreal", "capitale-nationale", "laval", "outaouais", "monteregie"],
+  "fence_types": ["cloture-temporaire", "cloture-panneau-grillage"],
+  "services": { "delivery": true, "install": true, "h24_7": false },
+  "is_partner": false,
+  "notes": "Clôtures de 6 pi et 8 pi, vaste inventaire, livraison, installation et retrait; réseau de succursales au Québec."
+}

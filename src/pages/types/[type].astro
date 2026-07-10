@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import QuoteCTA from '../../components/QuoteCTA.astro';
+import { cityGate } from '../../lib/publishGate';
+import { serviceSchema, breadcrumbSchema } from '../../lib/schema';
+import { TYPE_PHOTO } from '../../lib/images';
+
+export async function getStaticPaths() {
+  const types = await getCollection('types');
+  return types.map((t) => ({ params: { type: t.id }, props: { type: t.data } }));
+}
+
+const { type } = Astro.props;
+const photo = TYPE_PHOTO[type.slug];
+
+// Cities where a provider offers this fence type.
+const providers = (await getCollection('providers')).filter((p) => p.data.fence_types.includes(type.slug));
+const citySlugs = new Set(providers.flatMap((p) => p.data.cities_served));
+const cities = (await getCollection('cities')).filter((c) => citySlugs.has(c.id) && cityGate(c.data).indexable);
+
+const path = `/types/${type.slug}`;
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: type.name, path },
+  ]),
+  serviceSchema({
+    name: `Location de ${type.name.toLowerCase()}`,
+    description: type.differentiator ?? type.intro ?? type.name,
+    areaName: 'Québec',
+  }),
+];
+---
+
+<Base
+  title={`Location de ${type.name.toLowerCase()} au Québec | Prix et fournisseurs`}
+  description={`${type.intro ?? type.differentiator} Dimensions, matériau, prix et fournisseurs au Québec.`}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <main class="container">
+    <nav class="breadcrumbs"><a href="/">Accueil</a> / <span>{type.name}</span></nav>
+
+    <p class="eyebrow">Type de clôture · {type.priority.toUpperCase()}</p>
+    <h1>{type.name}</h1>
+    <p class="lede">{type.intro}</p>
+
+    {photo && (
+      <figure class="type-photo">
+        <img src={photo.src} alt={photo.alt} width="670" height="886" loading="eager" />
+      </figure>
+    )}
+
+    <section>
+      <h2>Caractéristiques</h2>
+      <div class="panel">
+        <dl class="datalist">
+          {type.dimensions.length > 0 && <div><dt>Dimensions</dt><dd>{type.dimensions.join(' · ')}</dd></div>}
+          {type.material && <div><dt>Matériau</dt><dd>{type.material}</dd></div>}
+          {type.use_cases.length > 0 && <div><dt>Usages</dt><dd>{type.use_cases.join(', ')}</dd></div>}
+          {type.price_range && <div><dt>Prix indicatif</dt><dd>{type.price_range}</dd></div>}
+        </dl>
+      </div>
+      <p>{type.differentiator}</p>
+    </section>
+
+    {cities.length > 0 && (
+      <section>
+        <h2>Disponible dans ces villes</h2>
+        <div class="section-links">
+          {cities.map((c) => <a href={`/villes/${c.id}`}>{c.data.name}</a>)}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <QuoteCTA />
+</Base>
