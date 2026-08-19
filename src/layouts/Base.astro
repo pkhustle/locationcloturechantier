@@ -35,14 +35,6 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body>
-    <div class="topbar">
-      <div class="container">
-        <span>📞 <a href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>{SITE.phone}</a></span>
-        <span>✉️ <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
-        <span class="sep"><strong>24/7</strong> — soumission gratuite partout au Québec</span>
-      </div>
-    </div>
-
     <header class="site-header">
       <div class="container">
         <a class="brand" href="/">
@@ -55,8 +47,17 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
           <a href="/guides/prix-location-cloture-chantier">Prix</a>
           <a href="/guides/permis-municipal-cloture-chantier">Permis</a>
           <a href="/fournisseurs">Fournisseurs</a>
-          <a class="btn btn-sm" href="/soumission">Demander une soumission</a>
+          <a href="/soumission">Soumission</a>
         </nav>
+        <a class="header-phone" href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>
+          <span class="ph-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg>
+          </span>
+          <span>
+            <b>{SITE.phone}</b>
+            <em>Appelez — soumission gratuite</em>
+          </span>
+        </a>
       </div>
     </header>
 
