@@ -7,9 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "start": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
-    "astro": "^5.7.0"
+    "@astrojs/node": "^9.5.5",
+    "astro": "^5.7.0",
+    "better-sqlite3": "^13.0.3"
   }
 }

@@ -1,0 +1,158 @@
+---
+import Admin from '../../layouts/Admin.astro';
+import { isLoggedIn } from '../../lib/auth';
+import { listLeads, countLeads, statsByStatut, distinctSources, STATUTS } from '../../lib/db';
+
+export const prerender = false;
+
+if (!isLoggedIn(Astro.cookies)) return Astro.redirect('/admin/login');
+
+const params = Astro.url.searchParams;
+const q = params.get('q')?.trim() ?? '';
+const statut = params.get('statut') ?? '';
+const source = params.get('source') ?? '';
+const page = Math.max(1, Number(params.get('page') ?? '1') || 1);
+const PER_PAGE = 50;
+
+const filter = { q, statut, source };
+const total = countLeads(filter);
+const pages = Math.max(1, Math.ceil(total / PER_PAGE));
+const leads = listLeads({ ...filter, limit: PER_PAGE, offset: (page - 1) * PER_PAGE });
+
+const stats = statsByStatut();
+const grandTotal = countLeads();
+const sources = distinctSources();
+
+/** Current URL, so a row action returns to the same filter + page. */
+const back = Astro.url.pathname + Astro.url.search;
+
+const qs = (over: Record<string, string>) => {
+  const sp = new URLSearchParams();
+  const merged = { q, statut, source, ...over };
+  for (const [k, v] of Object.entries(merged)) if (v) sp.set(k, v);
+  const s = sp.toString();
+  return s ? `/admin?${s}` : '/admin';
+};
+
+const dateFmt = new Intl.DateTimeFormat('fr-CA', {
+  dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Toronto',
+});
+const showDate = (iso: string) => {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : dateFmt.format(d);
+};
+
+/** Statut → CSS modifier (accents and spaces stripped). */
+const pillClass = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').split(' ')[0].toLowerCase();
+---
+
+<Admin title="Soumissions">
+  <main class="admin-main">
+    <h1>Soumissions</h1>
+    <p class="admin-sub">
+      {grandTotal} demande{grandTotal > 1 ? 's' : ''} au total
+      {total !== grandTotal && <> · {total} correspond{total > 1 ? 'ent' : ''} au filtre</>}
+    </p>
+
+    <div class="admin-stats">
+      <a class={`admin-stat${!statut ? ' is-active' : ''}`} href={qs({ statut: '', page: '' })}>
+        <b>{grandTotal}</b><span>Toutes</span>
+      </a>
+      {STATUTS.map((s) => (
+        <a class={`admin-stat${statut === s ? ' is-active' : ''}`} href={qs({ statut: s, page: '' })}>
+          <b>{stats[s] ?? 0}</b><span>{s}</span>
+        </a>
+      ))}
+    </div>
+
+    <form class="admin-filters" method="get" action="/admin">
+      <input type="search" name="q" value={q} placeholder="Rechercher (ville, courriel, téléphone, détails)" />
+      <select name="statut">
+        <option value="">Tous les statuts</option>
+        {STATUTS.map((s) => <option value={s} selected={statut === s}>{s}</option>)}
+      </select>
+      <select name="source">
+        <option value="">Toutes les sources</option>
+        {sources.map((s) => <option value={s} selected={source === s}>{s}</option>)}
+      </select>
+      <button class="btn" type="submit">Filtrer</button>
+      {(q || statut || source) && <a class="reset" href="/admin">Réinitialiser</a>}
+    </form>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Contact</th>
+            <th>Ville</th>
+            <th>Type</th>
+            <th>Longueur / durée</th>
+            <th>Détails</th>
+            <th>Source</th>
+            <th>Statut</th>
+            <th>Notes internes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {leads.length === 0 && (
+            <tr><td class="empty" colspan="10">Aucune soumission {total !== grandTotal ? 'pour ce filtre' : 'pour le moment'}.</td></tr>
+          )}
+          {leads.map((l) => (
+            <tr>
+              <td class="date">{showDate(l.created_at)}</td>
+              <td class="lead-contact">
+                {l.email && <a href={`mailto:${l.email}`}>{l.email}</a>}
+                {l.telephone && <a href={`tel:${l.telephone.replace(/[^0-9+]/g, '')}`}>{l.telephone}</a>}
+                {!l.email && !l.telephone && <span>—</span>}
+              </td>
+              <td>{l.ville || '—'}</td>
+              <td>{l.type_cloture || '—'}</td>
+              <td>{[l.longueur, l.duree].filter(Boolean).join(' · ') || '—'}</td>
+              <td class="details">{l.details || '—'}</td>
+              <td><span class="pill">{l.source || '—'}</span></td>
+              <td>
+                <form method="post" action="/api/admin/lead">
+                  <input type="hidden" name="id" value={l.id} />
+                  <input type="hidden" name="back" value={back} />
+                  <input type="hidden" name="notes" value={l.notes} />
+                  <span class={`dot ${pillClass(l.statut)}`} aria-hidden="true"></span>
+                  <select name="statut" onchange="this.form.requestSubmit()">
+                    {STATUTS.map((s) => <option value={s} selected={l.statut === s}>{s}</option>)}
+                  </select>
+                </form>
+              </td>
+              <td>
+                <form method="post" action="/api/admin/lead">
+                  <input type="hidden" name="id" value={l.id} />
+                  <input type="hidden" name="back" value={back} />
+                  <input type="hidden" name="statut" value={l.statut} />
+                  <input type="text" name="notes" value={l.notes} placeholder="Note…" />
+                  <button class="save" type="submit">OK</button>
+                </form>
+              </td>
+              <td>
+                <form method="post" action="/api/admin/lead" onsubmit="return confirm('Supprimer définitivement cette soumission ?')">
+                  <input type="hidden" name="id" value={l.id} />
+                  <input type="hidden" name="back" value={back} />
+                  <input type="hidden" name="action" value="delete" />
+                  <button class="del" type="submit" title="Supprimer" aria-label="Supprimer">✕</button>
+                </form>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {pages > 1 && (
+      <div class="admin-pager">
+        {page > 1 && <a href={qs({ page: String(page - 1) })}>← Précédent</a>}
+        <span>Page {page} sur {pages}</span>
+        {page < pages && <a href={qs({ page: String(page + 1) })}>Suivant →</a>}
+      </div>
+    )}
+  </main>
+</Admin>

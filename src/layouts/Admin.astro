@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import '../styles/admin.css';
+
+interface Props {
+  title: string;
+  /** Login page renders its own centered card without the top bar. */
+  bare?: boolean;
+}
+
+const { title, bare = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Administration</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#16233f" />
+  </head>
+  <body class={bare ? '' : 'admin-body'}>
+    {!bare && (
+      <div class="admin-bar">
+        <div class="container">
+          <a class="brand" href="/admin">
+            <span class="mark">▦</span>
+            Clôture<span>Chantier</span>
+          </a>
+          <span class="tag">Admin</span>
+          <nav>
+            <a href="/admin">Soumissions</a>
+            <a href="/admin/export.csv">Exporter CSV</a>
+            <a href="/" target="_blank" rel="noopener">Voir le site ↗</a>
+            <form method="post" action="/api/admin/logout">
+              <button type="submit">Déconnexion</button>
+            </form>
+          </nav>
+        </div>
+      </div>
+    )}
+    <slot />
+  </body>
+</html>

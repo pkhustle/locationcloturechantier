@@ -6,3 +6,9 @@ npm-debug.log*
 .env
 .env.production
 .gstack/
+
+# Base de données SQLite (leads) — ne jamais committer
+data/
+*.db
+*.db-wal
+*.db-shm

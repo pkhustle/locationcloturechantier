@@ -2,7 +2,8 @@ export const SITE = {
   url: 'https://locationcloturechantier.ca',
   name: 'Location Clôture Chantier',
   tagline: 'Location de clôture de chantier au Québec',
-  // Lead-gen contact — swap for the real line before launch.
+  // Numéro affiché dans l'en-tête et le pied de page. À remplacer par la vraie
+  // ligne avant le lancement.
   phone: '1-800-000-0000',
   email: 'info@locationcloturechantier.ca',
   locale: 'fr-CA',

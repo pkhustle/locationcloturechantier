@@ -22,8 +22,9 @@ const types = await getCollection('types');
       Décrivez votre chantier et recevez des soumissions de fournisseurs qui desservent votre secteur.
     </p>
 
-    <!-- Wire `action` to your form backend (Cloudflare/Netlify function) that routes leads to is_partner providers. -->
-    <form class="form" method="post" action="/api/soumission" data-netlify="true" name="soumission">
+    <form class="form" method="post" action="/api/soumission" name="soumission">
+      <input type="hidden" name="source" value="soumission-page" />
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
       <label>Ville du chantier
         <select name="ville" required>
           <option value="">Choisir…</option>
@@ -53,6 +54,7 @@ const types = await getCollection('types');
         <textarea name="details" rows="4" placeholder="Adresse, dates, contraintes particulières…"></textarea>
       </label>
       <button class="btn" type="submit">Envoyer ma demande</button>
+      <p class="form-note">En envoyant ce formulaire, vous acceptez d'être contacté par un fournisseur. Les appels téléphoniques peuvent être enregistrés à des fins de qualité.</p>
     </form>
   </main>
 </Base>

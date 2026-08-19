@@ -1,0 +1,49 @@
+---
+import Admin from '../../layouts/Admin.astro';
+import { isLoggedIn, adminConfigured } from '../../lib/auth';
+
+export const prerender = false;
+
+if (isLoggedIn(Astro.cookies)) return Astro.redirect('/admin');
+
+const err = Astro.url.searchParams.get('err');
+const messages: Record<string, string> = {
+  bad: 'Mot de passe incorrect.',
+  rate: 'Trop de tentatives. Réessayez dans 15 minutes.',
+  config: "Aucun mot de passe administrateur n'est configuré sur le serveur (ADMIN_PASSWORD).",
+  session: 'Session expirée. Reconnectez-vous.',
+};
+const message = err ? messages[err] ?? messages.bad : null;
+const configured = adminConfigured();
+---
+
+<Admin title="Connexion" bare={true}>
+  <div class="login-wrap">
+    <div class="login-card">
+      <a class="brand" href="/"><span class="mark">▦</span> Clôture<span>Chantier</span></a>
+      <h1>Zone administrateur</h1>
+
+      {message && <p class="login-error">{message}</p>}
+      {!configured && !message && (
+        <p class="login-error">
+          Aucun mot de passe n'est configuré. Définissez <code>ADMIN_PASSWORD</code> dans les
+          variables d'environnement du serveur, puis redémarrez l'application.
+        </p>
+      )}
+
+      <form method="post" action="/api/admin/login">
+        <input
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          autocomplete="current-password"
+          required
+          autofocus
+        />
+        <button class="btn" type="submit">Se connecter</button>
+      </form>
+
+      <p class="login-back"><a href="/">← Retour au site</a></p>
+    </div>
+  </div>
+</Admin>
