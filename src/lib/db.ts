@@ -6,7 +6,7 @@
  * globalThis so the dev server's module reloads don't leak file handles.
  */
 import './env';
-import Database from 'better-sqlite3';
+import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -61,7 +61,7 @@ CREATE INDEX IF NOT EXISTS idx_leads_created ON leads (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_leads_statut  ON leads (statut);
 `;
 
-type DB = InstanceType<typeof Database>;
+type DB = DatabaseSync;
 const cache = globalThis as unknown as { __leadsDb?: DB };
 
 export function db(): DB {
@@ -70,9 +70,9 @@ export function db(): DB {
   const file = process.env.DATABASE_PATH || path.join(process.cwd(), 'data', 'leads.db');
   fs.mkdirSync(path.dirname(file), { recursive: true });
 
-  const conn = new Database(file);
-  conn.pragma('journal_mode = WAL'); // survives concurrent reads while a write is in flight
-  conn.pragma('busy_timeout = 5000');
+  const conn = new DatabaseSync(file);
+  conn.exec('PRAGMA journal_mode = WAL;'); // survives concurrent reads while a write is in flight
+  conn.exec('PRAGMA busy_timeout = 5000;');
   conn.exec(SCHEMA);
 
   cache.__leadsDb = conn;

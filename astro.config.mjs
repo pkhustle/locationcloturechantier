@@ -24,6 +24,6 @@ export default defineConfig({
       { hostname: '127.0.0.1' },
     ],
   },
-  // better-sqlite3 is a native module: leave it to Node instead of bundling it.
-  vite: { ssr: { external: ['better-sqlite3'] } },
+  // node:sqlite is a Node 22 built-in: leave it to Node instead of bundling it.
+  vite: { ssr: { external: ['node:sqlite'] } },
 });
