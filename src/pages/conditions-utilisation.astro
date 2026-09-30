@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+---
+
+<Base
+  title="Conditions d'utilisation | Location Clôture Chantier"
+  description="Conditions générales d'utilisation du site Location Clôture Chantier et avis d'intermédiaire indépendant pour la location de clôture temporaire au Québec."
+  path="/conditions-utilisation"
+>
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Accueil</a> / <span>Conditions d'utilisation</span>
+    </nav>
+
+    <p class="eyebrow">Mentions légales · Québec</p>
+    <h1>Conditions d'utilisation</h1>
+    <p class="lede">
+      En accédant au site {SITE.name}, vous acceptez les présentes conditions d’utilisation. Veuillez les lire attentivement.
+    </p>
+
+    <article class="prose">
+      <h2>1. Objet et nature du service</h2>
+      <p>
+        <strong>{SITE.name}</strong> ({SITE.url}) est un portail indépendant d'information, un répertoire de fournisseurs
+        et un service de mise en relation facilitant la recherche et la comparaison de solutions de clôture temporaire
+        de chantier au Québec.
+      </p>
+      <p>
+        <strong>Avis important :</strong> {SITE.name} n'est ni un fabricant, ni un loueur direct de clôtures de chantier,
+        ni un entrepreneur en construction au sens de la <em>Loi sur le bâtiment</em>. Nous agissons exclusivement comme
+        plateforme de mise en contact entre des demandeurs (particuliers, entrepreneurs généraux, gestionnaires de chantier,
+        organisateurs d'événements) et des entreprises tierces de location et d'installation de clôtures de sécurité.
+      </p>
+
+      <h2>2. Demandes de soumissions et relations contractuelles</h2>
+      <p>
+        Le service de mise en relation et de demande de soumissions est gratuit pour les utilisateurs du site.
+      </p>
+      <p>
+        Toute entente commerciale, location d’équipement, calendrier de livraison, montage, démontage, tarification finale,
+        modalités de paiement ou facturation relève exclusivement d'un contrat direct conclu entre l'utilisateur et le fournisseur
+        tiers retenu. {SITE.name} n'est partie à aucun contrat conclu entre les parties et ne perçoit aucun paiement direct
+        pour les équipements loués.
+      </p>
+
+      <h2>3. Règlements municipaux et permis de chantier</h2>
+      <p>
+        Les synthèses réglementaires, fiches de permis municipaux, exigences de hauteur et liens vers les règlements municipaux
+        présentés sur le site sont compilés avec rigueur à des fins strictement informatives et documentaires.
+      </p>
+      <p>
+        La réglementation municipale, provinciale (CNESST, RBQ, MTQ) et les exigences d’occupation du domaine public évoluant
+        régulièrement, l'utilisateur demeure l'unique responsable de vérifier la conformité de son installation auprès de la
+        direction de l'urbanisme et des travaux publics de sa municipalité avant d'entreprendre des travaux ou d'ériger une clôture.
+      </p>
+
+      <h2>4. Exclusion de responsabilité</h2>
+      <p>
+        Dans toute la mesure permise par la loi applicable au Québec :
+      </p>
+      <ul>
+        <li>{SITE.name} ne garantit pas la disponibilité des équipements, les délais de livraison, la solvabilité ou la qualité des prestations des fournisseurs répertoriés ou partenaires;</li>
+        <li>{SITE.name} ne saurait être tenu responsable des dommages directs, indirects, accessoires ou consécutifs (pertes financières, retards de chantier, accidents, pénalités municipales) résultant de l’utilisation du site ou des services d'un loueur partenaire;</li>
+        <li>Les estimations de prix (au pied linéaire ou à la journée) affichées sur le site sont indicatives et basées sur les moyennes du marché québécois; seuls les devis émis directement par les fournisseurs ont valeur contractuelle.</li>
+      </ul>
+
+      <h2>5. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus figurant sur {SITE.name} — incluant sans s'y limiter les textes, guides, bases de données,
+        graphismes, logos, icônes et codes sources — est la propriété exclusive de {SITE.name} ou de ses concédants de licence
+        et est protégé par les lois sur le droit d'auteur et la propriété intellectuelle.
+      </p>
+      <p>
+        Toute reproduction, diffusion, extraction ou réutilisation non autorisée à des fins commerciales est formellement interdite
+        sans notre accord écrit préalable.
+      </p>
+
+      <h2>6. Liens vers des sites tiers</h2>
+      <p>
+        Notre site propose des liens vers des sites tiers (villes, organismes publics, sites officiels des loueurs). Ces liens
+        sont mis à votre disposition à titre pratique; nous n'exerçons aucun contrôle sur ces plateformes et déclinons toute
+        responsabilité quant à leur contenu ou leurs politiques de confidentialité.
+      </p>
+
+      <h2>7. Droit applicable et juridiction</h2>
+      <p>
+        Les présentes conditions d’utilisation sont régies et interprétées selon les lois en vigueur dans la province de Québec
+        et les lois fédérales du Canada. Tout litige découlant de l’utilisation du site sera soumis à la compétence exclusive
+        des tribunaux du district judiciaire compétent au Québec.
+      </p>
+
+      <h2>8. Pour nous joindre</h2>
+      <p>
+        Pour toute question ou remarque concernant ces conditions d'utilisation, vous pouvez nous écrire à :
+      </p>
+      <div class="panel">
+        <p><strong>{SITE.name}</strong></p>
+        <p>Courriel : <a href={`mailto:${SITE.email}`}>{SITE.email}</a> (ou <a href="mailto:komp76@gmail.com">komp76@gmail.com</a>)</p>
+        <p>Téléphone : <a href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>{SITE.phone}</a></p>
+        <p>Québec, Canada</p>
+      </div>
+    </article>
+  </main>
+</Base>

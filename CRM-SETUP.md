@@ -47,19 +47,11 @@ Aucune installation : un fichier créé automatiquement à la première soumissi
 Changer le mot de passe déconnecte toutes les sessions, sauf si
 `ADMIN_SESSION_SECRET` est défini.
 
-## 3. Google Sheet (optionnel)
+## 3. Google Sheet (désactivé / optionnel)
 
-Utile seulement pour recevoir un courriel à chaque soumission. Si
-`APPS_SCRIPT_URL` est vide, l'étape est simplement ignorée.
-
-1. Créer un Sheet, `Extensions ▸ Apps Script`, coller `crm/leads-sheet.gs`.
-2. Mettre un `TOKEN` long et aléatoire (`openssl rand -hex 24`) et le
-   `NOTIFY_EMAIL` voulu.
-3. `Deploy ▸ New deployment ▸ Web app` — Execute as **Me**, Access **Anyone**.
-   Copier l'URL `/exec`.
-
-Après toute modification de `leads-sheet.gs` : `Deploy ▸ Manage deployments ▸
-(éditer) ▸ New version`, sinon le Web App continue d'exécuter l'ancien code.
+Le site fonctionne de manière 100 % autonome sans Google Sheet. Toutes les soumissions
+sont stockées directement dans la base SQLite locale et gérées via `/admin` (avec export CSV).
+Laissez `APPS_SCRIPT_URL` vide pour ne pas l'utiliser.
 
 ## 4. Variables d'environnement
 

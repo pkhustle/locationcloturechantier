@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+---
+
+<Base
+  title="Page non trouvée (Erreur 404) | Location Clôture Chantier"
+  description="La page demandée est introuvable. Retrouvez nos guides, tarifs et fournisseurs de clôtures de chantier au Québec."
+  path="/404"
+  noindex={true}
+>
+  <main class="container" style="padding-top: 60px; padding-bottom: 80px; text-align: center;">
+    <p class="eyebrow" style="color: var(--orange); font-size: 16px; font-weight: 700;">Erreur 404</p>
+    <h1 style="margin-bottom: 20px;">Page introuvable</h1>
+    <p class="lede" style="margin: 0 auto 32px; max-width: 580px;">
+      Oups ! L’adresse demandée n’existe pas, a été déplacée ou le chantier a changé de zone.
+    </p>
+
+    <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px;">
+      <a class="btn" href="/">Retour à l'accueil</a>
+      <a class="btn btn-outline" href="/soumission">Demander une soumission</a>
+      <a class="btn btn-outline" href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>📞 {SITE.phone}</a>
+    </div>
+
+    <div class="panel" style="max-width: 640px; margin: 0 auto; text-align: left;">
+      <h2 style="font-size: 20px; margin-bottom: 14px;">Pages utiles à explorer :</h2>
+      <ul style="line-height: 2; margin: 0; padding-left: 20px;">
+        <li><a href="/guides/prix-location-cloture-chantier">Guide des prix de location au Québec (tarifs au pied linéaire)</a></li>
+        <li><a href="/guides/permis-municipal-cloture-chantier">Règles de permis municipal et hauteurs par ville</a></li>
+        <li><a href="/fournisseurs">Répertoire des fournisseurs de clôtures de chantier</a></li>
+        <li><a href="/villes/montreal">Clôtures de chantier à Montréal</a></li>
+        <li><a href="/villes/quebec">Clôtures de chantier à Québec</a></li>
+      </ul>
+    </div>
+  </main>
+</Base>

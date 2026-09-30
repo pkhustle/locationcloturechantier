@@ -17,7 +17,13 @@ export const GET: APIRoute = async () => {
 
   const indexableCities = cities.filter((c) => cityGate(c.data).indexable);
 
-  const paths: string[] = ['/', '/fournisseurs'];
+  const today = new Date().toISOString().split('T')[0];
+  const paths: string[] = [
+    '/',
+    '/fournisseurs',
+    '/politique-de-confidentialite',
+    '/conditions-utilisation',
+  ];
   for (const c of indexableCities) paths.push(`/villes/${c.id}`);
   for (const c of indexableCities.filter((c) => c.data.demand_tier === 1)) {
     paths.push(`/villes/${c.id}/cloture-temporaire`);
@@ -31,7 +37,7 @@ export const GET: APIRoute = async () => {
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    paths.map((p) => `  <url><loc>${SITE.url}${p}</loc></url>`).join('\n') +
+    paths.map((p) => `  <url>\n    <loc>${SITE.url}${p}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`).join('\n') +
     `\n</urlset>\n`;
 
   return new Response(body, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });

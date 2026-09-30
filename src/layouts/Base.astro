@@ -26,12 +26,23 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
     <meta name="theme-color" content="#16233f" />
     <link rel="preload" href="/fonts/GoogleSansFlex-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/TikTokSans-800.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_CA" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${SITE.url}/images/og-image.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Location de clôture de chantier au Québec" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${SITE.url}/images/og-image.jpg`} />
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body>
@@ -76,6 +87,8 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
               <li><a href="/">Accueil</a></li>
               <li><a href="/fournisseurs">Fournisseurs</a></li>
               <li><a href="/soumission">Demander une soumission</a></li>
+              <li><a href="/politique-de-confidentialite">Confidentialité</a></li>
+              <li><a href="/conditions-utilisation">Conditions</a></li>
             </ul>
           </div>
           <div>
@@ -97,7 +110,11 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
         </div>
         <div class="footer-bottom">
           <span>© 2026 {SITE.name}. Tous droits réservés.</span>
-          <span>Service de mise en relation — nous ne sommes pas un loueur.</span>
+          <span>
+            <a href="/politique-de-confidentialite">Confidentialité (Loi 25)</a> · 
+            <a href="/conditions-utilisation">Conditions d'utilisation</a> · 
+            Service de mise en relation indépendant
+          </span>
         </div>
       </div>
     </footer>

@@ -4,6 +4,10 @@ import { insertLead } from '../../lib/db';
 
 export const prerender = false;
 
+const submissions = new Map<string, { count: number; expires: number }>();
+const RATE_WINDOW = 10 * 60 * 1000; // 10 minutes
+const MAX_SUBMISSIONS = 6;
+
 /**
  * Handles the "Demander une soumission" form posts (hero, homepage, /soumission).
  * Writes the lead to the SQLite database — the source of truth behind /admin —
@@ -11,6 +15,21 @@ export const prerender = false;
  * which is what triggers the email alert), and redirects the visitor to /merci.
  */
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+  const ip = clientAddress ?? 'unknown';
+  const now = Date.now();
+  const rate = submissions.get(ip);
+  if (rate && now < rate.expires && rate.count >= MAX_SUBMISSIONS) {
+    return new Response(
+      'Trop de demandes envoyées. Pour une assistance immédiate, contactez-nous directement par téléphone au 581-397-8975.',
+      { status: 429, headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
+    );
+  }
+  if (!rate || now >= rate.expires) {
+    submissions.set(ip, { count: 1, expires: now + RATE_WINDOW });
+  } else {
+    rate.count += 1;
+  }
+
   const form = await request.formData();
   const field = (k: string) => String(form.get(k) ?? '').trim();
 

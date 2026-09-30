@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+---
+
+<Base
+  title="Politique de confidentialité — Loi 25 | Location Clôture Chantier"
+  description="Politique de confidentialité et protection des renseignements personnels conformément à la Loi 25 du Québec. Découvrez comment nous protégeons vos données."
+  path="/politique-de-confidentialite"
+>
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/">Accueil</a> / <span>Politique de confidentialité</span>
+    </nav>
+
+    <p class="eyebrow">Conformité · Loi 25 du Québec</p>
+    <h1>Politique de confidentialité</h1>
+    <p class="lede">
+      Dernière mise à jour : 30 septembre 2026. La protection de vos renseignements personnels est une priorité pour {SITE.name}.
+    </p>
+
+    <article class="prose">
+      <h2>1. Cadre légal et engagement</h2>
+      <p>
+        La présente politique décrit les pratiques de <strong>{SITE.name}</strong> en matière de collecte,
+        d’utilisation, de communication et de conservation de vos renseignements personnels, en conformité
+        avec la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> (Loi 25 du Québec)
+        et les lois canadiennes applicables (LPRPDE).
+      </p>
+      <p>
+        {SITE.name} est un service indépendant de mise en relation et un répertoire d’information reliant
+        des entrepreneurs, gestionnaires de chantier et particuliers avec des entreprises spécialisées dans
+        la location et l’installation de clôtures temporaires de chantier au Québec.
+      </p>
+
+      <h2>2. Renseignements personnels collectés</h2>
+      <p>Nous ne recueillons que les renseignements nécessaires pour traiter vos demandes :</p>
+      <ul>
+        <li><strong>Coordonnées de contact :</strong> adresse courriel, numéro de téléphone, nom ou raison sociale de l’entreprise.</li>
+        <li><strong>Informations relatives au chantier :</strong> ville ou secteur des travaux, type de clôture souhaité (panneaux grillagés, clôture opaque, anti-bruit, etc.), longueur approximative en pieds linéaires, durée prévue de location et détails particuliers du projet.</li>
+        <li><strong>Données techniques de connexion :</strong> adresse IP, date et heure de la soumission, identifiant du navigateur (User-Agent) à des fins de sécurité, d’audit et de prévention contre les pourriels.</li>
+      </ul>
+
+      <h2>3. Finalités de la collecte</h2>
+      <p>Les données sont recueillies pour les finalités suivantes :</p>
+      <ul>
+        <li>Transmettre votre demande de soumission aux fournisseurs indépendants de clôtures de chantier desservant votre localité afin qu'ils puissent vous contacter et formuler une offre tarifaire;</li>
+        <li>Répondre à vos questions et assurer le suivi du service à la clientèle;</li>
+        <li>Prévenir la fraude, les soumissions automatisées par robots (spam) et sécuriser la plateforme.</li>
+      </ul>
+      <p>
+        <strong>Nous ne vendons, ne louons et ne cédons jamais vos renseignements personnels à des courtiers de données tiers</strong>
+        à des fins publicitaires non liées à votre projet de clôture de chantier.
+      </p>
+
+      <h2>4. Transmission aux fournisseurs partenaires</h2>
+      <p>
+        En remplissant un formulaire de demande de soumission sur notre site, vous consentez expressément à ce que
+        les détails de votre projet et vos coordonnées soient communiqués à un ou plusieurs loueurs ou installateurs
+        de clôtures de chantier dûment sélectionnés qui desservent votre secteur géographique. Ces partenaires sont
+        tenus d'utiliser vos données uniquement dans le but de vous proposer une soumission adaptée à votre demande.
+      </p>
+
+      <h2>5. Conservation et mesures de sécurité</h2>
+      <p>
+        Vos données sont conservées sur des serveurs sécurisés protégés par des protocoles de chiffrement conformes
+        aux normes de l’industrie. L'accès à la base de données interne est strictement restreint aux seules
+        personnes autorisées ayant un mot de passe sécurisé et une clé cryptographique.
+      </p>
+      <p>
+        Les données sont conservées uniquement pour la durée nécessaire à l’accomplissement des fins pour lesquelles
+        elles ont été collectées ou pour respecter nos obligations légales et administratives.
+      </p>
+
+      <h2>6. Vos droits (accès, rectification et suppression)</h2>
+      <p>
+        Conformément aux lois applicables au Québec, vous disposez des droits suivants concernant vos renseignements personnels :
+      </p>
+      <ul>
+        <li>Droit de consulter et d’obtenir une copie des renseignements que nous détenons à votre sujet;</li>
+        <li>Droit de faire rectifier tout renseignement inexact, incomplet ou équivoque;</li>
+        <li>Droit de demander la suppression de vos données personnelles de nos registres;</li>
+        <li>Droit de retirer votre consentement au traitement de vos données en tout temps.</li>
+      </ul>
+
+      <h2>7. Responsable de la protection des renseignements personnels</h2>
+      <p>
+        Conformément aux exigences de la Loi 25, la personne responsable de la protection des renseignements personnels
+        au sein de notre organisation veille au respect de la législation en vigueur. Pour exercer vos droits ou pour toute
+        question relative à la présente politique, vous pouvez contacter :
+      </p>
+      <div class="panel">
+        <p><strong>Responsable de la protection des renseignements personnels</strong></p>
+        <p>Organisation : {SITE.name}</p>
+        <p>Courriel : <a href="mailto:komp76@gmail.com">komp76@gmail.com</a> (ou <a href={`mailto:${SITE.email}`}>{SITE.email}</a>)</p>
+        <p>Téléphone : <a href={`tel:${SITE.phone.replace(/[^0-9+]/g, '')}`}>{SITE.phone}</a></p>
+        <p>Territoire d'application : Québec, Canada</p>
+      </div>
+      <p>
+        Toute demande d’accès ou de rectification fera l’objet d’une réponse écrite dans un délai maximal de 30 jours
+        suivant sa réception.
+      </p>
+    </article>
+  </main>
+</Base>

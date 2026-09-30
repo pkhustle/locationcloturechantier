@@ -13,7 +13,7 @@
 
 const TOKEN = 'CHANGE-ME-long-random-shared-secret';
 const SHEET_NAME = 'Leads';
-const NOTIFY_EMAIL = 'info@locationcloturechantier.ca'; // '' pour désactiver les alertes
+const NOTIFY_EMAIL = 'komp76@gmail.com'; // '' pour désactiver les alertes
 
 const HEADERS = [
   'Timestamp', 'Source', 'Ville', 'Type de clôture', 'Longueur',
