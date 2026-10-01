@@ -47,6 +47,7 @@ dans notre niche.
 ## 3. Répertoires & citations (choisir la qualité, éviter les blasts)
 
 Une douzaine de bons répertoires > 200 annuaires poubelles.
+Voir le kit complet prêt à copier-coller dans `outreach/citations-kit.md`.
 
 | Répertoire | Site | Priorité | Statut |
 |---|---|:-:|:-:|
