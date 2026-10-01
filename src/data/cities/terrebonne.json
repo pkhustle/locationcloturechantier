@@ -1,0 +1,44 @@
+{
+  "slug": "terrebonne",
+  "name": "Terrebonne",
+  "region": "lanaudiere",
+  "mrc": "Les Moulins",
+  "population": 121000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.7000,
+    "lng": -73.6333
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement d'urbanisme et occupation temporaire — Ville de Terrebonne",
+    "bylaw_url": "https://www.ville.terrebonne.qc.ca/permis-et-certificats",
+    "permit_url": "https://www.ville.terrebonne.qc.ca/demande-de-permis-en-ligne",
+    "cost_note": "Tarif variable selon l'emprise occupée et l'entrave à la voie publique.",
+    "lead_time_note": "Délai moyen de 10 jours ouvrables; avis CNESST 10 jours avant le début des travaux.",
+    "notes": "L'installation d'une clôture de protection temporaire est requise dès le début de l'excavation ou des travaux structuraux."
+  },
+  "boroughs": [
+    "Terrebonne-Centre",
+    "Lachenaie",
+    "La Plaine"
+  ],
+  "local_context": "10e plus grande ville du Québec, Terrebonne connaît un développement soutenu dans les secteurs résidentiels et industriels le long des autoroutes 25 et 640.",
+  "nearby_cities": [
+    "laval",
+    "montreal"
+  ],
+  "providers": [
+    "cloture-secure",
+    "groupe-choquette",
+    "battlefield",
+    "lou-tec",
+    "super-save",
+    "moduloc"
+  ],
+  "pricing_note": "Terrebonne et couronne Nord : 0,30 $ à 0,80 $ / pi linéaire / mois; couverture directe par les centres de location de Laval et de l'Est de Montréal.",
+  "unique_fact": "Dans le Vieux-Terrebonne, les chantiers patrimoniaux nécessitent un permis spécial d'intégration architecturale, même pour les aménagements temporaires.",
+  "image": "/images/Barriere-standard.webp",
+  "image_alt": "Clôture de chantier standard grillagée à Terrebonne"
+}

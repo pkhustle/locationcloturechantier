@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import QuoteCTA from '../../components/QuoteCTA.astro';
 import { cityGate } from '../../lib/publishGate';
-import { serviceSchema, breadcrumbSchema } from '../../lib/schema';
+import { serviceSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import { TYPE_PHOTO } from '../../lib/images';
 
 export async function getStaticPaths() {
@@ -20,6 +20,77 @@ const citySlugs = new Set(providers.flatMap((p) => p.data.cities_served));
 const cities = (await getCollection('cities')).filter((c) => citySlugs.has(c.id) && cityGate(c.data).indexable);
 
 const path = `/types/${type.slug}`;
+
+const typeFaqs: Record<string, { q: string; a: string }[]> = {
+  'cloture-temporaire': [
+    {
+      q: 'Quelles sont les dimensions courantes d’une clôture temporaire de chantier ?',
+      a: 'Le format standard au Québec est de 8 pieds de largeur par 6 pieds de hauteur (ou 7,5 pi × 6 pi), monté sur des bases de béton ou socles lestés pour assurer la stabilité sans ancrage au sol.',
+    },
+    {
+      q: 'Comment assurer la stabilité face aux vents violents ?',
+      a: 'Pour résister aux rafales, les installateurs ajoutent des jambes de force (renforts diagonaux), des blocs de béton additionnels ou des sacs de lestage, surtout si une toile brise-vent est installée.',
+    },
+    {
+      q: 'Est-elle conforme aux exigences de la CNESST ?',
+      a: 'Oui, une clôture temporaire d’au moins 1,80 m répond aux exigences de séparation physique entre la zone de travaux et le public prescrites par le Code de sécurité pour les travaux de construction (S-2.1, r. 4).',
+    },
+  ],
+  'cloture-panneau-grillage': [
+    {
+      q: 'Pourquoi privilégier les panneaux grillagés soudés ?',
+      a: 'Les panneaux grillagés en treillis soudé offrent une rigidité supérieure et empêchent toute intrusion ou escalade, tout en conservant une bonne visibilité pour la surveillance du périmètre.',
+    },
+    {
+      q: 'Quel est le mode d’assemblage des panneaux ?',
+      a: 'Les panneaux s’emboîtent dans des socles de béton et sont solidarisés au sommet par des colliers de serrage en acier galvanisé inviolables.',
+    },
+  ],
+  'cloture-opaque-brise-vent': [
+    {
+      q: 'Dans quels cas la clôture opaque avec toile brise-vent est-elle exigée ?',
+      a: 'Les municipalités denses (comme Montréal ou Laval) l’exigent souvent le long des trottoirs achalandés pour masquer les travaux, retenir les poussières et débris légers, et éviter les distractions routières.',
+    },
+    {
+      q: 'Quel est l’impact de la toile sur la prise au vent ?',
+      a: 'La toile brise-vent augmente considérablement la prise au vent. L’ajout de jambes de force et de bases alourdies (ou ancrées sur glissières de béton) est impératif pour éviter le basculement.',
+    },
+  ],
+  'cloture-mobile': [
+    {
+      q: 'Quelle est la différence entre clôture mobile et clôture fixe ?',
+      a: 'La clôture mobile repose sur des socles autoportants déplaçables à la main ou au chariot élévateur, sans perforation du sol, ce qui permet d’adapter le périmètre au fur et à mesure de l’avancement des phases de travaux.',
+    },
+    {
+      q: 'Peut-on l’installer sur l’asphalte ou un trottoir ?',
+      a: 'Oui, c’est son atout majeur : elle ne nécessite aucun poteau planté, préservant ainsi l’intégrité du pavage, de l’asphalte ou des dalles publiques.',
+    },
+  ],
+  'cloture-anti-bruit': [
+    {
+      q: 'Quel niveau d’atténuation sonore peut-on espérer ?',
+      a: 'Les panneaux ou bâches acoustiques certifiés réduisent généralement le niveau de bruit de chantier de 15 à 30 dB, limitant ainsi les plaintes de voisinage.',
+    },
+    {
+      q: 'Est-ce accepté pour respecter les règlements de bruit municipaux ?',
+      a: 'Oui, plusieurs villes du Québec exigent l’installation d’écrans acoustiques pour autoriser des travaux en milieu résidentiel ou des chantiers de nuit.',
+    },
+  ],
+};
+
+const defaultFaqs = [
+  {
+    q: `Quel est le prix moyen pour une ${type.name.toLowerCase()} ?`,
+    a: `Le tarif indicatif est de ${type.price_range ?? '0,30 $ à 0,80 $ / pi linéaire / mois'}. Les coûts de livraison, de montage et de démontage s’ajoutent selon la localisation.`,
+  },
+  {
+    q: `En combien de temps la ${type.name.toLowerCase()} peut-elle être livrée ?`,
+    a: 'La plupart des fournisseurs québécois répertoriés assurent une livraison sous 24 à 48 heures ouvrables, avec service d’urgence disponible 24/7 chez certains partenaires.',
+  },
+];
+
+const faqs = typeFaqs[type.slug] ?? defaultFaqs;
+
 const jsonLd = [
   breadcrumbSchema([
     { name: 'Accueil', path: '/' },
@@ -29,7 +100,9 @@ const jsonLd = [
     name: `Location de ${type.name.toLowerCase()}`,
     description: type.differentiator ?? type.intro ?? type.name,
     areaName: 'Québec',
+    priceRange: type.price_range,
   }),
+  faqSchema(faqs),
 ];
 ---
 
@@ -65,6 +138,18 @@ const jsonLd = [
       <p>{type.differentiator}</p>
     </section>
 
+    <section>
+      <h2>Réglementation et guides pratiques</h2>
+      <p>
+        Avant d’installer vos panneaux, assurez-vous de respecter les exigences légales applicables à votre chantier :
+      </p>
+      <div class="section-links">
+        <a href="/guides/prix-location-cloture-chantier">💰 Guide complet des prix de location</a>
+        <a href="/guides/permis-municipal-cloture-chantier">📋 Permis d’occupation du domaine public par ville</a>
+        <a href="/guides/normes-cnesst-securite-chantier">🛡️ Normes de sécurité CNESST</a>
+      </div>
+    </section>
+
     {cities.length > 0 && (
       <section>
         <h2>Disponible dans ces villes</h2>
@@ -73,6 +158,16 @@ const jsonLd = [
         </div>
       </section>
     )}
+
+    <section class="faq">
+      <h2>Questions fréquentes sur la {type.name.toLowerCase()}</h2>
+      {faqs.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
   </main>
 
   <QuoteCTA />

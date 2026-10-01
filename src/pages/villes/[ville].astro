@@ -54,6 +54,8 @@ const jsonLd = gate.indexable
         name: `Location de clôture de chantier à ${city.name}`,
         description: `Fournisseurs, prix et règles de permis pour la location de clôture de chantier à ${city.name}, ${city.mrc ?? 'Québec'}.`,
         areaName: city.name,
+        geo: city.geo,
+        priceRange: city.pricing_note,
       }),
       faqSchema(faqItems),
     ]
@@ -137,9 +139,10 @@ const jsonLd = gate.indexable
           </dl>
         </div>
         <p>
-          Ces règles municipales s’ajoutent aux exigences de la CNESST.
-          Voir le <a href="/guides/permis-municipal-cloture-chantier">guide des permis par ville</a> et le
-          <a href="/guides/prix-location-cloture-chantier"> guide des prix</a>.
+          Ces règles municipales s’ajoutent aux exigences provinciales : consultez notre
+          <a href="/guides/normes-cnesst-securite-chantier">guide des normes CNESST</a>, notre
+          <a href="/guides/permis-municipal-cloture-chantier">guide des permis par ville</a> et le
+          <a href="/guides/prix-location-cloture-chantier">guide des prix de location</a>.
         </p>
       </section>
     )}

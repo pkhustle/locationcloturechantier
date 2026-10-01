@@ -1,0 +1,40 @@
+{
+  "slug": "trois-rivieres",
+  "name": "Trois-Rivières",
+  "region": "mauricie",
+  "mrc": "Ville de Trois-Rivières",
+  "population": 140000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 46.3432,
+    "lng": -72.5477
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement sur les permis et certificats en urbanisme — Ville de Trois-Rivières",
+    "bylaw_url": "https://www.v3r.net/services-au-citoyen/permis-et-licences",
+    "permit_url": "https://www.v3r.net/services-au-citoyen/permis-et-licences/faire-une-demande-de-permis",
+    "cost_note": "Certificat d'autorisation ou permis d'entrave de voirie requis en cas d'empiètement.",
+    "lead_time_note": "Prévoir 5 à 10 jours ouvrables; avis d'ouverture CNESST 10 jours avant le chantier.",
+    "notes": "L'installation d'une clôture de protection continue est obligatoire pour tous les travaux visibles depuis les artères principales ou le secteur portuaire."
+  },
+  "boroughs": [
+    "Trois-Rivières-Centre",
+    "Cap-de-la-Madeleine",
+    "Trois-Rivières-Ouest",
+    "Pointe-du-Lac"
+  ],
+  "local_context": "Carrefour stratégique entre Montréal et Québec : les chantiers industriels, portuaires et commerciaux génèrent une demande constante de clôtures métalliques avec toiles coupe-vue.",
+  "nearby_cities": [],
+  "providers": [
+    "battlefield",
+    "lou-tec",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Trois-Rivières et Mauricie : 0,30 $ à 0,80 $ / pi linéaire / mois; desserte directe par les centres de location régionaux situés le long de l'autoroute 40.",
+  "unique_fact": "À Trois-Rivières, les chantiers situés près du fleuve Saint-Laurent ou de la rivière Saint-Maurice sont soumis à des vents côtiers soutenus, rendant indispensables les lests renforcés.",
+  "image": "/images/Cloture-temporaire-1.webp",
+  "image_alt": "Clôture de chantier temporaire en acier à Trois-Rivières"
+}

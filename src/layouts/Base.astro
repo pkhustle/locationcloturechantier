@@ -22,6 +22,11 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr-CA" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <meta name="geo.region" content="CA-QC" />
+    <meta name="geo.placename" content="Québec" />
+    <meta name="author" content={SITE.name} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#16233f" />
     <link rel="preload" href="/fonts/GoogleSansFlex-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -96,6 +101,7 @@ const canonical = SITE.url + (path === '/' ? '/' : path);
             <ul>
               <li><a href="/guides/prix-location-cloture-chantier">Prix de location</a></li>
               <li><a href="/guides/permis-municipal-cloture-chantier">Permis par ville</a></li>
+              <li><a href="/guides/normes-cnesst-securite-chantier">Normes CNESST</a></li>
               <li><a href="/#villes">Villes desservies</a></li>
             </ul>
           </div>

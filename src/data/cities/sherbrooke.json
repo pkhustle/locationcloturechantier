@@ -1,0 +1,39 @@
+{
+  "slug": "sherbrooke",
+  "name": "Sherbrooke",
+  "region": "estrie",
+  "mrc": "Ville de Sherbrooke",
+  "population": 172000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.4000,
+    "lng": -71.8990
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement n° 1200 sur les permis et certificats — Ville de Sherbrooke",
+    "bylaw_url": "https://www.sherbrooke.ca/fr/services-aux-citoyens/permis-et-reglements",
+    "permit_url": "https://www.sherbrooke.ca/fr/services-aux-citoyens/permis-et-reglements/demande-de-permis",
+    "cost_note": "Permis d'entrave ou d'occupation temporaire de la voie publique tarifié selon la durée des travaux.",
+    "lead_time_note": "Dépôt de la demande au moins 10 jours ouvrables à l'avance; avis de 10 jours à la CNESST.",
+    "notes": "Une clôture temporaire est obligatoire pour isoler les travaux des voies piétonnes et cyclables, notamment aux abords des campus universitaires et des zones hospitalières."
+  },
+  "boroughs": [
+    "Fleurimont",
+    "Les Nations",
+    "Lennoxville"
+  ],
+  "local_context": "Cœur économique et institutionnel de l'Estrie : les nombreux chantiers de rénovation universitaire, hospitalière et de génie civil exigent une logistique de clôture rigoureuse sur un relief vallonné.",
+  "nearby_cities": [],
+  "providers": [
+    "battlefield",
+    "lou-tec",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Sherbrooke et Estrie : 0,30 $ à 0,80 $ / pi linéaire / mois; des succursales locales de Lou-Tec et Battlefield réduisent les frais de kilométrage.",
+  "unique_fact": "En raison du relief accidenté de Sherbrooke, les installateurs recommandent des systèmes de clôtures avec socles modulaires adaptables aux fortes pentes.",
+  "image": "/images/Cloture-sur-glissiere-en-beton.webp",
+  "image_alt": "Clôture de chantier sur glissière de béton adaptée au relief de Sherbrooke"
+}

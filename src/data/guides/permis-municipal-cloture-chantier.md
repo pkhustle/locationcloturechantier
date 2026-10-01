@@ -23,4 +23,4 @@ Chaque fiche ville détaille le règlement municipal applicable, le lien vers la
 
 ## Avant d'ouvrir votre chantier
 
-Vérifiez toujours **deux** paliers : le **règlement municipal** de votre ville (permis d'occupation, hauteur, habillage) *et* les **exigences de la CNESST** (avis d'ouverture, sécurisation). Les deux contrôles peuvent être faits séparément.
+Vérifiez toujours **deux** paliers : le **règlement municipal** de votre ville (permis d'occupation, hauteur, habillage) *et* les **exigences de la CNESST** (avis d'ouverture, sécurisation du périmètre). Pour connaître les détails du Code de sécurité S-2.1, r. 4, consultez notre [guide des normes de sécurité CNESST](/guides/normes-cnesst-securite-chantier). Pour planifier vos coûts, reportez-vous au [guide des prix de location](/guides/prix-location-cloture-chantier).

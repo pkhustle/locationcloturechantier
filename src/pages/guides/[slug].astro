@@ -3,7 +3,8 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import QuoteCTA from '../../components/QuoteCTA.astro';
 import { cityGate } from '../../lib/publishGate';
-import { breadcrumbSchema } from '../../lib/schema';
+import { breadcrumbSchema, articleSchema } from '../../lib/schema';
+import { SITE } from '../../lib/site';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides');
@@ -27,6 +28,12 @@ const jsonLd = [
     { name: 'Accueil', path: '/' },
     { name: guide.data.title, path },
   ]),
+  articleSchema({
+    title: guide.data.title,
+    description: guide.data.description,
+    url: `${SITE.url}${path}`,
+    dateModified: guide.data.updated,
+  }),
 ];
 ---
 

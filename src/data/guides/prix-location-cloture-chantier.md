@@ -29,4 +29,9 @@ Le tarif dépend surtout de la **localisation** du chantier, de sa **taille**, d
 
 ## Estimez votre projet
 
-Pour une estimation adaptée à votre chantier, comparez plusieurs fournisseurs locaux — les tarifs varient selon la zone de livraison et la durée. Demandez une soumission pour recevoir des prix réels pour votre site.
+Pour une estimation adaptée à votre chantier, comparez plusieurs fournisseurs locaux — les tarifs varient selon la zone de livraison et la durée.
+
+Consultez également nos ressources d'accompagnement :
+* [Règles de permis municipal par ville](/guides/permis-municipal-cloture-chantier) (occupation du domaine public).
+* [Normes de sécurité CNESST](/guides/normes-cnesst-securite-chantier) (Code de sécurité et avis d'ouverture 10 jours).
+* [Demandez une soumission gratuite](/soumission) pour recevoir des prix réels auprès des loueurs de votre région.

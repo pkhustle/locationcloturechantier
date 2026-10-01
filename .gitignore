@@ -4,11 +4,13 @@ node_modules/
 .DS_Store
 npm-debug.log*
 .env
+.env.*
+.env.outreach
 .env.production
 .gstack/
 
 # Base de données SQLite (leads) — ne jamais committer
-data/
+/data/
 *.db
 *.db-wal
 *.db-shm

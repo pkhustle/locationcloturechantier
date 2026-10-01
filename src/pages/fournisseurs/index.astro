@@ -2,12 +2,23 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import QuoteCTA from '../../components/QuoteCTA.astro';
-import { breadcrumbSchema } from '../../lib/schema';
+import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
 
 const providers = (await getCollection('providers')).sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 const path = '/fournisseurs';
-const jsonLd = [breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Fournisseurs', path }])];
+const jsonLd = [
+  breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Fournisseurs', path }]),
+  itemListSchema({
+    name: 'Fournisseurs de location de clôture de chantier au Québec',
+    description: 'Répertoire indépendant des entreprises de location et installation de clôtures temporaires au Québec.',
+    items: providers.map((p) => ({
+      name: p.data.name,
+      url: p.data.url,
+      description: p.data.notes,
+    })),
+  }),
+];
 ---
 
 <Base

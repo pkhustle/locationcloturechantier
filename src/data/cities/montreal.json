@@ -29,7 +29,9 @@
   "local_context": "Forte densité de chantiers en milieu urbain : les clôtures opaques ou avec toile brise-vent sont souvent exigées près des trottoirs et des voies publiques pour protéger les passants.",
   "nearby_cities": [
     "laval",
-    "longueuil"
+    "longueuil",
+    "brossard",
+    "terrebonne"
   ],
   "providers": [
     "cloture-secure",

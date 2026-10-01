@@ -16,14 +16,14 @@ Cible réaliste 6 mois : **10-20 liens de qualité**, pas 200.
 
 | Fournisseur | Contact trouvé | Courriel envoyé | Relance | Lien en ligne | Notes |
 |---|:-:|:-:|:-:|:-:|---|
-| Battlefield | ☐ | ☐ | ☐ | ☐ | |
-| Clôture Sécure | ☐ | ☐ | ☐ | ☐ | |
-| Clôture Temporaire | ☐ | ☐ | ☐ | ☐ | |
-| Groupe Choquette | ☐ | ☐ | ☐ | ☐ | |
-| LOU-TEC | ☐ | ☐ | ☐ | ☐ | |
-| Modu-Loc | ☐ | ☐ | ☐ | ☐ | |
-| Simplex | ☐ | ☐ | ☐ | ☐ | |
-| Super Save | ☐ | ☐ | ☐ | ☐ | |
+| Battlefield | ☑ | ☑ | ☐ | ☐ | Jean Savard (Directeur QC) - Déjà envoyé |
+| Clôture Sécure | ☑ | ☐ | ☐ | ☐ | Vincent Lizotte (Président) - vlizotte@groupechoquette.com |
+| Clôture Temporaire | ☑ | ☑ | ☐ | ☐ | Direction (Laval) - info@cloturetemporaire.com (438-865-3530) |
+| Groupe Choquette | ☑ | ☐ | ☐ | ☐ | Vincent Lizotte (Président) - vlizotte@groupechoquette.com |
+| LOU-TEC | ☑ | ☑ | ☐ | ☐ | Hugues Charbonneau (Dir. Régional Ventes) - hugues.charbonneau@loutec.com |
+| Modu-Loc | ☑ | ☑ | ☐ | ☐ | Rob Palbom (Regional Director) - rpalbom@moduloc.ca |
+| Simplex | ☑ | ☑ | ☐ | ☐ | Daniel Laliberté (Dir. Dév. Affaires) - dlaliberte@simplex.ca |
+| Super Save | ☑ | ☑ | ☐ | ☐ | Steve Cummings (Operations Manager) - scummings@supersave.ca |
 
 ---
 

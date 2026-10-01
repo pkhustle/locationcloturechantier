@@ -1,0 +1,46 @@
+{
+  "slug": "brossard",
+  "name": "Brossard",
+  "region": "monteregie",
+  "mrc": "Agglomération de Longueuil",
+  "population": 95000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 45.4667,
+    "lng": -73.4500
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement relatif aux clôtures et à l'occupation du domaine public — Ville de Brossard",
+    "bylaw_url": "https://www.brossard.ca/services-aux-citoyens/permis-et-certificats",
+    "permit_url": "https://www.brossard.ca/services-aux-citoyens/permis-et-certificats/demande-de-permis-en-ligne",
+    "cost_note": "Tarif d'occupation temporaire du domaine public fixé selon le règlement de tarification municipale.",
+    "lead_time_note": "Prévoir un délai d'au moins 10 jours ouvrables pour l'analyse de l'occupation de voirie.",
+    "notes": "Les chantiers à proximité des stations du REM ou du Quartier DIX30 font l'objet de règles strictes d'occultation visuelle et de protection des trottoirs piétonniers."
+  },
+  "boroughs": [
+    "Secteur A-B-C",
+    "Secteur R-S-T",
+    "Quartier DIX30",
+    "Secteur M-N-O"
+  ],
+  "local_context": "Hub urbain en pleine densification sur la Rive-Sud de Montréal : les développements mixtes et les abords des stations du REM imposent un contrôle d'accès strict et des clôtures opaques anti-poussière.",
+  "nearby_cities": [
+    "longueuil",
+    "montreal"
+  ],
+  "providers": [
+    "cloture-secure",
+    "groupe-choquette",
+    "battlefield",
+    "lou-tec",
+    "super-save",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Brossard et Rive-Sud : 0,30 $ à 0,80 $ / pi linéaire / mois; livraison rapide sans supplément dans l'ensemble de l'agglomération de Longueuil.",
+  "unique_fact": "À Brossard, les grands projets de densification urbaine le long du boulevard Taschereau exigent fréquemment des clôtures bardées de toiles brise-vent pour limiter l'impact visuel et les projections.",
+  "image": "/images/Cloture-temporaire-avec-renfort.webp",
+  "image_alt": "Clôture de chantier avec renforts au Quartier DIX30 à Brossard"
+}

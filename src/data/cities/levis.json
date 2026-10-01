@@ -1,0 +1,41 @@
+{
+  "slug": "levis",
+  "name": "Lévis",
+  "region": "chaudiere-appalaches",
+  "mrc": "Ville de Lévis",
+  "population": 152000,
+  "demand_tier": 1,
+  "geo": {
+    "lat": 46.8033,
+    "lng": -71.1779
+  },
+  "permit": {
+    "public_domain_permit_required": true,
+    "min_height_m": 1.8,
+    "bylaw_name": "Règlement relatif aux clôtures et à l'occupation de la voie publique — Ville de Lévis",
+    "bylaw_url": "https://www.ville.levis.qc.ca/developpement-et-urbanisme/reglements-urbanisme/",
+    "permit_url": "https://www.ville.levis.qc.ca/citoyens/permis-et-licences/",
+    "cost_note": "Frais d'analyse et tarification d'occupation du domaine public selon la superficie et la durée.",
+    "lead_time_note": "Délai de traitement d'environ 5 à 10 jours ouvrables; avis d'ouverture CNESST 10 jours avant les travaux.",
+    "notes": "À Lévis, toute clôture de chantier empiétant sur la voie publique, le trottoir ou la piste cyclable nécessite un permis d'occupation temporaire."
+  },
+  "boroughs": [
+    "Desjardins",
+    "Les Chutes-de-la-Chaudière-Ouest",
+    "Les Chutes-de-la-Chaudière-Est"
+  ],
+  "local_context": "Principal pôle économique et urbain de la Rive-Sud de Québec : les chantiers commerciaux et résidentiels y bénéficient d'un accès rapide aux grands axes autoroutiers (autoroutes 20 et 73).",
+  "nearby_cities": [
+    "quebec"
+  ],
+  "providers": [
+    "battlefield",
+    "lou-tec",
+    "moduloc",
+    "simplex"
+  ],
+  "pricing_note": "Lévis et Rive-Sud de Québec : 0,30 $ à 0,80 $ / pi linéaire / mois; livraison directe depuis les succursales de Lévis ou de Québec via les ponts.",
+  "unique_fact": "À Lévis, les chantiers bordant la route des Rivières ou le boulevard Guillaume-Couture exigent souvent une coordination de signalisation pour ne pas entraver les voies réservées.",
+  "image": "/images/barriere-sur-bloc-de-beton-1.webp",
+  "image_alt": "Clôture temporaire de chantier sur socles de béton à Lévis"
+}
